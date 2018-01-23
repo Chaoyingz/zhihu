@@ -1,0 +1,114 @@
+header {
+  height: 52px;
+  width: 100%;
+  background-color: #fff;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(26,26,26,.1);
+
+  $default-color: #8590a6;
+
+  .inner {
+    padding: 11px 0;
+    box-sizing: border-box;
+
+    /** LOGO BEGIN **/
+    #logo {
+      display: block;
+      position: absolute;
+      left: 0;
+      width: 64px;
+      img {
+        height: 30px;
+        width: 64px;
+      }
+    }
+    /** LOGO END **/
+
+    /** NAV BAR BEGIN **/
+    nav {
+      position: absolute;
+      left: 90px;
+      display: flex;
+      height: 30px;
+      width: 165px;
+      a {
+        padding: 0 15px;
+        color: $default-color;
+        font-size: 15px;
+        line-height: 30px;
+        &:first-child {
+          padding-left: 0;
+        }
+        &:hover {
+          color: #175199;
+        }
+      }
+    }
+    /** NAV BAR END **/
+
+    /** SEARCH BAR BEGIN **/
+    #searchbar {
+      position: absolute;
+      left: 260px;
+      height: 30px;
+      width: 400px;
+
+      form {
+        display: inline-block;
+        width: 325px;
+        height: 30px;
+        background-color: #f6f6f6;
+        font-size: 13px;
+        border: 1px solid #ebebeb;
+        padding: 4px 10px;
+        box-sizing: border-box;
+        border-radius: 2px;
+        color: $default-color;
+        input {
+          padding: 0;
+          color: #1a1a1a;
+          height: 22px;
+          width: 305px;
+          background-color: inherit;
+          border: none;
+          line-height: 22px;
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+
+      button {
+        border: none;
+        color: #fff;
+        background-color: #0084ff;
+        margin-left: 15px;
+        padding: 0 14px;
+        line-height: 30px;
+        border-radius: 3px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+    /** SEARCH BAR END **/
+
+    /** ACCOUNT BAR BEGIN **/
+    #accountbar {
+      position: absolute;
+      right: 0;
+      display: flex;
+      width: 180px;
+      height: 30px;
+      color: $default-color;
+      .accountbar-icon {
+        margin-right: 40px;
+        padding: 5px 0;
+        cursor: pointer;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+    /** ACCOUNT BAR END **/
+  }
+}

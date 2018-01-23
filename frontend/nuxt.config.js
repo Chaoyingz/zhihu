@@ -1,9 +1,22 @@
 module.exports = {
   /*
+  ** Global CSS
+  */
+  css: [
+    '@assets/css/normalize.css',
+    '@assets/css/common.css',
+  ],
+  /*
+  **  Global plugin
+  */
+  plugins: [
+    { src: '~plugins/awesome-icon'},
+  ],
+  /*
   ** Headers of the page
   */
   head: {
-    title: 'frontend',
+    title: '知乎',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -33,6 +46,7 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
-    }
+    },
+    vendor: ['vue-awesome',]
   }
 }
