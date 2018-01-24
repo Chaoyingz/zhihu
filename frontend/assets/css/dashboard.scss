@@ -1,0 +1,45 @@
+#dashboard {
+  display: flex;
+  justify-content: space-between;
+  width: 690px;
+  height: 58px;
+  padding: 0 20px;
+  background-color: #fff;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(26,26,26,.1);
+}
+
+#dashboard-nav {
+  width: 200px;
+  button, a {
+    display: inline-block;
+    height: 100%;
+    line-height: 58px;
+    color: #1a1a1a;
+    margin-right: 40px;
+    cursor: pointer;
+    transition: color .2s ease-in;
+    &:hover {
+      color: #175199;
+    }
+    svg {
+      position: relative;
+      top: 3px;
+      left: -3px;
+      color: #8590a6;
+    }
+  }
+}
+
+#dashboard > a {
+  display: block;
+  float: right;
+  color: #8590a6;
+  line-height: 58px;
+  transition: color .2s ease-in;
+  &:hover {
+    color: #175199;
+  }
+}

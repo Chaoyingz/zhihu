@@ -1,4 +1,8 @@
+#head-container {
+  height: 52px;
+}
 header {
+  position: fixed;
   height: 52px;
   width: 100%;
   background-color: #fff;
@@ -49,11 +53,12 @@ header {
     /** SEARCH BAR BEGIN **/
     #searchbar {
       position: absolute;
-      left: 260px;
+      left: 275px;
       height: 30px;
       width: 400px;
 
       form {
+        position: relative;
         display: inline-block;
         width: 325px;
         height: 30px;
@@ -76,10 +81,22 @@ header {
             outline: none;
           }
         }
+        div {
+          height: 22px;
+          width: 22px;
+          position: absolute;
+          right: 4px;
+          top: 4px;
+          cursor: pointer;
+          svg {
+            position: relative;
+            left: 3px;
+            top: 3px;
+          }
+        }
       }
 
       button {
-        border: none;
         color: #fff;
         background-color: #0084ff;
         margin-left: 15px;
@@ -99,13 +116,18 @@ header {
       display: flex;
       width: 180px;
       height: 30px;
-      color: $default-color;
       .accountbar-icon {
         margin-right: 40px;
         padding: 5px 0;
-        cursor: pointer;
         &:last-child {
           margin-right: 0;
+        }
+        button {
+          color: $default-color;
+          cursor: pointer;
+          &:hover {
+            color: #77839c;
+          }
         }
       }
     }

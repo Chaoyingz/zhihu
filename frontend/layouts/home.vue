@@ -1,7 +1,9 @@
 <template>
   <div id="wrapper">
     <HomeHead></HomeHead>
-    <nuxt/>
+    <div class="inner">
+      <nuxt/>
+    </div>
   </div>
 </template>
 

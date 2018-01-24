@@ -446,3 +446,13 @@ template {
 [hidden] {
   display: none;
 }
+
+
+/*
+** CUSTOM STYLE RESET
+*/
+button {
+  background: none;
+  border: none;
+  padding: 0;
+}
