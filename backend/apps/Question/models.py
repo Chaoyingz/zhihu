@@ -78,7 +78,7 @@ class Answer(models.Model):
     )
 
     author = models.ForeignKey(User, related_name='answers',
-                               verbose_name="提问者", on_delete=models.CASCADE)
+                               verbose_name="回答者", on_delete=models.CASCADE)
     question = models.ForeignKey(Question, related_name="answers",
                                  verbose_name="问题", on_delete=models.CASCADE)
     text = models.TextField(verbose_name="内容")
@@ -93,7 +93,7 @@ class Answer(models.Model):
                                    related_name="collection")
 
     class Meta:
-        ordering = ('-vote',)
+        ordering = ('-publish',)
         verbose_name = "回答"
         verbose_name_plural = verbose_name
 

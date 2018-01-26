@@ -1,4 +1,6 @@
 #head-container {
+  position: relative;
+  z-index: 1000;
   height: 52px;
 }
 header {
