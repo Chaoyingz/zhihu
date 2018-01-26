@@ -22,12 +22,23 @@
         </div>
 
         <div class="question-title">
-          <h2>{{ answer.question }}</h2>
+          <h2>
+            <a href="#">{{ answer.question }}</a>
+          </h2>
         </div>
 
-        <div class="answer-content">
+        <div class="answer-content" v-if="!contentStatus[index]"
+        @click="toggleContent(index)">
+          <span>{{ cutContent(answer.text) }}</span>
+          <button type="button">
+            阅读全文
+            <icon name="angle-down" scale="1.1"></icon>
+          </button>
+        </div>
+
+        <!-- TOGGLE CONTENT -->
+        <div class="answer-content" v-if="contentStatus[index]">
           <span>{{ answer.text }}</span>
-          <button type="button">阅读全文</button>
         </div>
 
         <div class="answer-actions">
@@ -94,7 +105,8 @@ export default {
   },
   data () {
     return {
-      recommendList: []
+      recommendList: [],
+      contentStatus: [],
     }
   },
   methods: {
@@ -108,7 +120,18 @@ export default {
 
       })
     },
-
+    // 问题文本截取
+    cutContent (text) {
+      if (text.length > 80) {
+        return text.slice(0, 80) + '...';
+      } else {
+        return text;
+      }
+    },
+    // 开关READ MORE
+    toggleContent (index) {
+      this.$set(this.contentStatus, index, !this.contentStatus[index])
+    }
   },
   created () {
     this.fetchData ()

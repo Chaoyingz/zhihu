@@ -5,7 +5,6 @@ body {
 .inner {
   position: relative;
   max-width: 1000px;
-  height: auto;
   margin: 0 auto;
 }
 /** COMMON STYLE END **/
