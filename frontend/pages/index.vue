@@ -1,5 +1,5 @@
 <template>
-  <div id="main-container">
+  <div id="main-container" class="inner">
     <DashBoard></DashBoard>
 
     <!-- RECOMMEND LIST BEGIN -->
@@ -23,7 +23,9 @@
 
         <div class="question-title">
           <h2>
-            <a href="#">{{ answer.question }}</a>
+            <router-link :to="`questions/${answer.question_id}`" target="_blank">
+              {{ answer.question }}
+            </router-link>
           </h2>
         </div>
 
@@ -41,43 +43,7 @@
           <span>{{ answer.text }}</span>
         </div>
 
-        <div class="answer-actions">
-
-          <span class="answer-vote">
-            <button type="button">
-              <icon name="sort-up" scale="1.2"></icon>
-              {{ answer.vote }}
-            </button>
-            <button type="button">
-              <icon name="sort-down" scale="1.2"></icon>
-            </button>
-          </span>
-
-          <button type="button" class="answer-comment">
-            <icon name="comment" scale="1"></icon>
-            <span> 1 条评论</span>
-          </button>
-
-          <div class="answer-share">
-            <icon name="send" scale="0.9"></icon>
-            分享
-          </div>
-
-          <button type="button" class="answer-collection">
-            <icon name="star" scale="1"></icon>
-            收藏
-          </button>
-
-          <button type="button" class="answer-thank">
-            <icon name="heart" scale="0.9"></icon>
-            感谢
-          </button>
-
-          <button type="button" class="answer-more">
-            <icon name="ellipsis-h" scale="0.9"></icon>
-          </button>
-
-        </div>
+        <AnswerAction :vote="answer.vote"></AnswerAction>
 
       </div>
       <!-- RECOMMEND ANSWER END -->
@@ -94,7 +60,8 @@
 
 <script>
 import {getAnswers} from '../api/api'
-import DashBoard from '../components/DashBoard'
+import AnswerAction from '../components/Home/AnswerAction'
+import DashBoard from '../components/Home/DashBoard'
 export default {
   layout: 'home',
   head: {
@@ -102,6 +69,7 @@ export default {
   },
   components: {
     DashBoard,
+    AnswerAction,
   },
   data () {
     return {

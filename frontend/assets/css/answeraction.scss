@@ -1,0 +1,53 @@
+.answer-actions {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 0 -20px -10px;
+  color: #646464;
+  button {
+    color: #8590a6;
+  }
+
+  .answer-vote > button {
+    display: inline-block;
+    padding: 0 12px;
+    color: #0084ff;
+    background: rgba(0,132,255,.1);
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-right: 4px;
+    svg {
+      position: relative;
+      top: 8px;
+      margin-right: 4px;
+    }
+    &:hover {
+      background-color: rgba(0,132,255,.15);
+    }
+  }
+  .answer-vote > button:last-child svg {
+    position: relative;
+    top: 0;
+    margin: 0;
+  }
+
+  .answer-comment, .answer-share, .answer-collection,
+  .answer-thank, .answer-more {
+    margin-left: 24px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 20px;
+    color: #8590a6;
+    svg {
+      position: relative;
+      top: 1px;
+    }
+  }
+
+  .answer-more svg {
+    top: 3px;
+  }
+
+}

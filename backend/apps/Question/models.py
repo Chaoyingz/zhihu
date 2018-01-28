@@ -49,6 +49,7 @@ class Question(models.Model):
     publish = models.DateTimeField(default=timezone.now, verbose_name="发布日期")
     created = models.DateTimeField(auto_now_add=True, verbose_name="创建日期")
     updated = models.DateTimeField(auto_now=True, verbose_name="更新日期")
+    views = models.PositiveIntegerField(default=0)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
                               default='draft', verbose_name="问题状态")
     author = models.ForeignKey(User, related_name='questions',
@@ -64,6 +65,10 @@ class Question(models.Model):
 
     def __str__(self):
         return self.title
+
+    def increase_views(self):
+        self.views += 1
+        self.save(update_fields=['views'])
 
 
 class Answer(models.Model):

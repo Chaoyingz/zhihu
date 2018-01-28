@@ -1,6 +1,7 @@
 from rest_framework import mixins
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
 
 from .serializers import AnswerSerializers, TopicSerializers, QuestionSerializers
 from .models import Answer, Topic, Question
@@ -48,3 +49,10 @@ class QuestionViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets
     queryset = Question.objects.all()
     serializer_class = QuestionSerializers
     pagination_class = BasePagination
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        # 统计文章阅读量
+        instance.increase_views()
+        return Response(serializer.data)

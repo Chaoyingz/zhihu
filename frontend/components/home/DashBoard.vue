@@ -27,5 +27,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/dashboard.scss';
+@import '../../assets/css/dashboard.scss';
 </style>

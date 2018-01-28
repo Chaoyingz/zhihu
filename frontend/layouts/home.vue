@@ -1,14 +1,12 @@
 <template>
   <div id="wrapper">
     <HomeHead></HomeHead>
-    <div class="inner">
-      <nuxt/>
-    </div>
+    <nuxt/>
   </div>
 </template>
 
 <script>
-import HomeHead from "../components/HomeHead"
+import HomeHead from "../components/Home/HomeHead"
 export default {
   components: {
     HomeHead,

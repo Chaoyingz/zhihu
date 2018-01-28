@@ -7,3 +7,8 @@ export const getQuestions = () => { return axios.get(`${baseUrl}questions/`) }
 
 // 获取回答列表
 export const getAnswers = () => { return axios.get(`${baseUrl}answers/`) }
+
+// 获取问题详情
+export const getQuestionDetail = params => {
+  return axios.get(`${baseUrl}questions/${params}/`)
+}
