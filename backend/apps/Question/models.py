@@ -54,9 +54,9 @@ class Question(models.Model):
                               default='draft', verbose_name="问题状态")
     author = models.ForeignKey(User, related_name='questions',
                                verbose_name="提问者", on_delete=models.CASCADE,)
-    topic = models.ForeignKey(Topic, related_name='questions',
-                                 verbose_name="话题", null=True, blank=True,
-                                 on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, related_name='questions', blank=True,
+                              verbose_name="话题", on_delete=models.CASCADE,
+                              null=True,)
 
     class Meta:
         ordering = ('-publish',)

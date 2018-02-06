@@ -94,7 +94,7 @@
 
 <script>
 import '../../filter/moment.js'
-import {getQuestionDetail} from '../../api/api'
+import {fetchQuestionDetail} from '../../api/api'
 import AnswerAction from '../../components/Home/AnswerAction'
 export default {
   layout: 'home',
@@ -115,7 +115,7 @@ export default {
   },
   methods: {
     fetchData () {
-      getQuestionDetail(this.$route.params.id)
+      fetchQuestionDetail(this.$route.params.id)
       .then (res => {
         this.question = res.data
         this.title = res.data.title

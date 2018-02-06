@@ -33,18 +33,18 @@
     font-size: 22px;
   }
 }
-.login-content {
+.login-content, .register-content {
   padding: 0 40px 36px;
   input {
     display: block;
     width: 100%;
     outline: none;
     margin-top: 16px;
-    border-bottom: 1px solid #ebebeb;
     border-radius: 0;
     border: none;
     height: 48px;
     padding: 0;
+    font-size: 14px;
     color: #8590a6;
     border-bottom: 1px solid #ebebeb;
   }
@@ -73,6 +73,42 @@
     font-size: 14px;
   }
 }
+.register-content form {
+  .register-mobile {
+    height: 48px;
+    margin-top: 16px;
+    border-bottom: 1px solid #ebebeb;
+    border-radius: 0;
+    button {
+      display: inline-block;
+      float: left;
+      height: 48px;
+      width: 80px;
+      color: #8590a6;
+      font-size: 14px;
+      svg {
+        position: relative;
+        top: 2px;
+        left: 4px;
+      }
+    }
+    span {
+      float: left;
+      width: 1px;
+      height: 22px;
+      margin: 24px 12px 0;
+      background: #ebebeb;
+      -webkit-transform: translateY(-11px);
+      transform: translateY(-11px);
+    }
+    input {
+      margin: 0;
+      display: inline-block;
+      width: 230px;
+      border: none;
+    }
+  }
+}
 .signup-switch {
   text-align: center;
   line-height: 58px;
@@ -83,6 +119,6 @@
   font-size: 16px;
   span{
     color: #175199;
-    cursor: pointer;  
+    cursor: pointer;
   }
 }

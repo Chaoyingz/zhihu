@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import {getAnswers} from '../api/api'
+import {fetchAnswers} from '../api/api'
 import AnswerAction from '../components/Home/AnswerAction'
 import DashBoard from '../components/Home/DashBoard'
 export default {
@@ -80,7 +80,7 @@ export default {
   methods: {
     // 获取回答JSON
     fetchData () {
-      getAnswers()
+      fetchAnswers()
       .then (res => {
         this.recommendList = res.data.results
       })
