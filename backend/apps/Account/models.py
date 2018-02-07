@@ -8,11 +8,13 @@ class UserProfile(AbstractUser):
     用户资料模型
     """
 
+    mobile = models.CharField(max_length=11, blank=True, verbose_name="手机号")
+    email = models.EmailField(max_length=254, blank=True, verbose_name="邮箱")
     views = models.PositiveIntegerField(default=0, verbose_name="浏览次数")
     desc = models.CharField(max_length=100, verbose_name="描述", blank=True)
     gender = models.CharField(max_length=6, choices=(('male', u"男"),
-                             ('female', "女"), ('null', "未知")), default='null',
-                             verbose_name="性别")
+                              ('female', "女"), ('null', "未知")), default='null',
+                              verbose_name="性别")
 
     class Meta:
         verbose_name = "用户"

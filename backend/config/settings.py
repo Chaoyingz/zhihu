@@ -120,6 +120,10 @@ STATIC_URL = '/static/'
 # Custom user profile
 AUTH_USER_MODEL = 'Account.UserProfile'
 
+# USER BACKENDS
+AUTHENTICATION_BACKENDS = (
+    'Account.views.CustomBackend',
+)
 
 # 跨域
 CORS_ORIGIN_ALLOW_ALL = True

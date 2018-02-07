@@ -20,6 +20,8 @@
   box-shadow: 0 1px 3px rgba(26,26,26,.1);
   box-sizing: border-box;
 }
+
+/** FORM HEADER BEGIN **/
 .signup-header {
   padding-bottom: 5px;
   padding-top: 30px;
@@ -33,33 +35,54 @@
     font-size: 22px;
   }
 }
+/** FORM HEADER END **/
+
+/** COMMON STYLE BEGIN **/
+button, input {
+  font-size: 14px;
+}
+input {
+  display: block;
+  width: 100%;
+  outline: none;
+  margin-top: 16px;
+  border-radius: 0;
+  border: none;
+  height: 48px;
+  padding: 0;
+  color: #8590a6;
+}
+.error-mask {
+  height: 49px;
+  font-size: 14px;
+  color: #f1403c;
+  text-align: left;
+  line-height: 49px;
+  cursor: text;
+}
+.form-options {
+  margin-top: 12px;
+  height: 20px;
+}
+.input-container {
+  height: 48px;
+  margin-top: 16px;
+  border-bottom: 1px solid #ebebeb;
+  border-radius: 0;
+}
+/** COMMON STYLE END **/
+
+/** LOGIN CONTAINER BEGIN **/
 .login-content, .register-content {
   padding: 0 40px 36px;
-  input {
-    display: block;
-    width: 100%;
-    outline: none;
-    margin-top: 16px;
-    border-radius: 0;
-    border: none;
-    height: 48px;
-    padding: 0;
-    font-size: 14px;
-    color: #8590a6;
-    border-bottom: 1px solid #ebebeb;
-  }
-  .login-options {
-    margin-top: 12px;
-    height: 20px;
+  .form-options {
     display: flex;
     justify-content: space-between;
     button:first-child {
       color: #175199;
-      font-size: 14px;
     }
     button:last-child {
       color: #8590a6;
-      font-size: 14px;
     }
   }
   form > button {
@@ -70,24 +93,20 @@
     height: 36px;
     border-radius: 3px;
     color: #fff;
-    font-size: 14px;
   }
 }
+/** LOGIN CONTAINER END **/
+
+/** REGISTER CONTAINER BEGIN **/
 .register-content form {
   .register-mobile {
-    height: 48px;
-    margin-top: 16px;
-    border-bottom: 1px solid #ebebeb;
-    border-radius: 0;
     button {
       display: inline-block;
       float: left;
       height: 48px;
       width: 80px;
       color: #8590a6;
-      font-size: 14px;
       svg {
-        position: relative;
         top: 2px;
         left: 4px;
       }
@@ -101,14 +120,39 @@
       -webkit-transform: translateY(-11px);
       transform: translateY(-11px);
     }
-    input {
-      margin: 0;
+    .register-mobile-input {
       display: inline-block;
       width: 230px;
       border: none;
+      input {
+        margin: 0;
+      }
+    }
+  }
+  .register-code {
+    position: relative;
+    button {
+      position: absolute;
+      top: 15px;
+      right: 0;
+      padding: 4px 0;
+      color: #175199;
+      &:hover {
+        color: #8590a6;
+      }
+    }
+  }
+  .form-options {
+    display: block;
+    button {
+      float: right;
+      color: #8590a6;
     }
   }
 }
+/** REGISTER CONTAINER END **/
+
+/** SWITCH CONTAINER BEGIN **/
 .signup-switch {
   text-align: center;
   line-height: 58px;
@@ -122,3 +166,4 @@
     cursor: pointer;
   }
 }
+/** SWITCH CONTAINER END **/
