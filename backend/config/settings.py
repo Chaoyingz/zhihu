@@ -120,10 +120,10 @@ STATIC_URL = '/static/'
 # Custom user profile
 AUTH_USER_MODEL = 'Account.UserProfile'
 
-# USER BACKENDS
-AUTHENTICATION_BACKENDS = (
-    'Account.views.CustomBackend',
-)
+# login
+AUTHENTICATION_BACKENDS = {
+     'Account.views.CustomBackend',
+}
 
 # 跨域
 CORS_ORIGIN_ALLOW_ALL = True
@@ -149,7 +149,17 @@ REST_FRAMEWORK = {
     )
 }
 
+
+def jwt_response_payload_handler(token, user=None, request=None):
+    data = {
+        "token": token,
+        "username": user.username,
+    }
+    return data
+
+
 JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': jwt_response_payload_handler,
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }

@@ -50,7 +50,8 @@ class QuestionSerializers(serializers.ModelSerializer):
 
     def get_links(self, obj):
         request = self.context['request']
-        return reverse('question-detail', kwargs={'pk': obj.pk}, request=request)
+        return reverse('question-detail', kwargs={'pk': obj.pk},
+                       request=request)
 
     def get_answers_count(self, obj):
         return obj.answers.count()

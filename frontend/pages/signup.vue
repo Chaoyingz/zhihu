@@ -18,11 +18,15 @@
         <!-- LOGIN CONTAINER BEGIN -->
         <div class="login-content" v-show="isLoginPage">
           <form @submit.prevent="login">
-            <input type="text" v-model="loginInfo.username" placeholder="手机号或邮箱">
-            <input type="password" v-model="loginInfo.password" placeholder="密码">
+            <div class="input-container">
+              <input type="text" v-model="loginInfo.username" placeholder="手机号或邮箱">
+            </div>
+            <div class="input-container">
+              <input type="password" v-model="loginInfo.password" placeholder="密码">
+            </div>
             <div class="form-options">
               <button type="button">手机验证码登陆</button>
-              <button type="button">忘记密码</button>
+              <button type="button">忘记密码？</button>
             </div>
             <button type="submit">登陆</button>
           </form>
@@ -117,7 +121,7 @@ export default {
       let self = this
       fetchLogin (this.loginInfo)
       .then (res => {
-        localStorage.setItem('username', this.loginInfo.username)
+        localStorage.setItem('username', res.data.username)
         localStorage.setItem('token', res.data.token)
         this.$store.dispatch('userLogin')
         self.$router.push('/')
