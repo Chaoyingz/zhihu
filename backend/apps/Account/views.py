@@ -9,8 +9,11 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
+from rest_framework_jwt.serializers import jwt_encode_handler, \
+                                           jwt_payload_handler
 
-from .serializers import UserProfileSerializers, SmsSerializers
+from .serializers import UserProfileSerializer, SmsSerializer, \
+                          UserRegisterSerializer
 from utils.sms import YunPian
 from config.settings import SMS_KEY
 from .models import VerifyCode
@@ -45,14 +48,14 @@ class BasePagination(PageNumberPagination):
 
 
 class UserProfileViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                         viewsets.GenericViewSet, mixins.CreateModelMixin):
+                         viewsets.GenericViewSet):
 
     """
     用户
     """
 
     queryset = User.objects.all()
-    serializer_class = UserProfileSerializers
+    serializer_class = UserProfileSerializer
     pagination_class = BasePagination
 
 
@@ -61,7 +64,7 @@ class SmsCodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
     短信验证码生成
     """
-    serializer_class = SmsSerializers
+    serializer_class = SmsSerializer
 
     def generate_code(self):
         """
@@ -93,3 +96,31 @@ class SmsCodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
             return Response({
                 "mobile": mobile
             }, status=status.HTTP_201_CREATED)
+
+
+class UserRegisterViewset(mixins.CreateModelMixin, mixins.UpdateModelMixin,
+                          mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+
+    """
+    用户注册
+    """
+
+    serializer_class = UserRegisterSerializer
+    queryset = User.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = self.perform_create(serializer)
+        re_dict = serializer.data
+        payload = jwt_payload_handler(user)
+        re_dict["token"] = jwt_encode_handler(payload)
+        re_dict["name"] = user.name if user.name else user.username
+        headers = self.get_success_headers(serializer.data)
+        return Response(re_dict, status=status.HTTP_201_CREATED, headers=headers)
+
+    def get_object(self):
+        return self.request.user
+
+    def perform_create(self, serializer):
+        return serializer.save()

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import UserProfile
+from .models import UserProfile, VerifyCode
 
 
 class UserProfileField(admin.ModelAdmin):
@@ -8,3 +8,4 @@ class UserProfileField(admin.ModelAdmin):
 
 
 admin.site.register(UserProfile, UserProfileField)
+admin.site.register(VerifyCode)
