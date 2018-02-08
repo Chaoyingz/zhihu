@@ -53,18 +53,35 @@ input {
   color: #8590a6;
 }
 .error-mask {
+  position: absolute;
+  top: 0;
   height: 49px;
+  width: 100%;
   font-size: 14px;
   color: #f1403c;
   text-align: left;
   line-height: 49px;
   cursor: text;
+  .error {
+    position: absolute;
+    right: 0;
+    &:before {
+      position: absolute;
+      top: 0;
+      left: -16px;
+      width: 16px;
+      height: 46px;
+      background: linear-gradient(90deg,hsla(0,0%,100%,0),#fff);
+      content: "";
+    }
+  }
 }
 .form-options {
   margin-top: 12px;
   height: 20px;
 }
 .input-container {
+  position: relative;
   height: 48px;
   margin-top: 16px;
   border-bottom: 1px solid #ebebeb;
@@ -111,7 +128,7 @@ input {
         left: 4px;
       }
     }
-    span {
+    span.vertical {
       float: left;
       width: 1px;
       height: 22px;
@@ -122,16 +139,20 @@ input {
     }
     .register-mobile-input {
       display: inline-block;
+      height: 100%;
       width: 230px;
       border: none;
       input {
         margin: 0;
       }
+      .error-mask.mobile {
+        width: 230px;
+      }
     }
   }
   .register-code {
     position: relative;
-    button {
+    button.show, button.hide {
       position: absolute;
       top: 15px;
       right: 0;
@@ -140,6 +161,10 @@ input {
       &:hover {
         color: #8590a6;
       }
+    }
+    button.hide {
+      color: #8590a6;
+      cursor: default;
     }
   }
   .form-options {

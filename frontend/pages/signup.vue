@@ -42,14 +42,15 @@
                 中国 +86
                 <icon name="sort" scale="0.9"></icon>
               </button>
-              <span>&nbsp;</span>
+              <span class="vertical">&nbsp;</span>
               <div class="register-mobile-input">
                 <input type="text" v-model="registerInfo.mobile"
                 placeholder="手机号" v-show="!registerMask.mobile"
-                v-focus="!registerMask.mobile">
-                <div class="error-mask" v-show="registerMask.mobile"
+                v-focus="focus.mobile" @blur="focus.mobile=false">
+                <div class="error-mask mobile" v-show="registerMask.mobile || regError.mobile"
                 @click="toggleMask('mobile')">
-                  请输入手机号
+                  <span class="error" v-show="regError.mobile">{{ regError.mobile }}</span>
+                  <span v-show="registerMask.mobile">请输入手机号</span>
                 </div>
               </div>
             </div>
@@ -57,15 +58,20 @@
             <div class="input-container register-code">
               <div class="register-code-input" v-show="!registerMask.code">
                 <input type="code" v-model="registerInfo.code"
-                placeholder="验证码" v-focus="!registerMask.code">
-                <button type="button">获取短信验证码</button>
+                placeholder="验证码" v-focus="focus.code"
+                @blur="focus.code=false">
               </div>
               <div class="error-mask" v-show="registerMask.code"
               @click="toggleMask('code')">
-                请输入短信验证码
+                <span>请输入短信验证码</span>
               </div>
+              <button class="show" type="button" @click="fetchSms" v-show="codeBtn">
+                获取短信验证码
+              </button>
+              <button type="button" v-show="!codeBtn" class="hide">
+                {{ timeInterval }}秒后可重发
+              </button>
             </div>
-
             <div class="form-options">
               <button type="button">接收语音验证码</button>
             </div>
@@ -96,7 +102,7 @@
 <script>
 import {mapActions} from 'vuex'
 
-import {fetchLogin} from '../api/api'
+import {fetchLogin, fetchSmsCode} from '../api/api'
 export default {
   data () {
     return {
@@ -113,6 +119,16 @@ export default {
           code: true
         },
         isLoginPage: true,
+        timeInterval: 60,
+        codeBtn: true,
+        regError: {
+          mobile: '',
+          code: '',
+        },
+        focus: {
+          mobile: false,
+          code: false,
+        },
     }
   },
   methods: {
@@ -134,13 +150,37 @@ export default {
       this.isLoginPage = !this.isLoginPage
     },
     toggleMask (div) {
-      console.log('111')
       if (div === 'mobile') {
         this.registerMask.mobile = false
+        this.focus.mobile = true
+        this.regError.mobile = ''
       } else if (div === 'code') {
-         this.registerMask.code = false
+        this.registerMask.code = false
+        this.focus.code = true
+        this.regError.code = ''
       }
-    }
+    },
+    fetchSms () {
+      let params = {
+        mobile: this.registerInfo.mobile
+      }
+      fetchSmsCode (params)
+      .then(res => {
+        let that = this
+        that.codeBtn = false
+        let interval = window.setInterval( function() {
+          that.timeInterval = that.timeInterval - 1
+          if (that.timeInterval <= 0) {
+            that.timeInterval = 60;
+            that.codeBtn = true;
+            window.clearInterval(interval);
+          }
+        }, 1000);
+      })
+      .catch(err => {
+        this.regError.mobile = err.response.data.mobile[0]
+      })
+    },
   },
   directives: {
     focus: {

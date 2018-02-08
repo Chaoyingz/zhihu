@@ -44,15 +44,15 @@ class SmsSerializers(serializers.Serializer):
         # 验证手机号码是否合法
         REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
         if not re.match(REGEX_MOBILE, mobile):
-            raise serializers.ValidationError("本网站不支持您输入的手机号码!")
+            raise serializers.ValidationError("请输入正确的手机号")
 
         # 手机号是否注册
         if User.objects.filter(mobile=mobile).count():
-            raise serializers.ValidationError("您输入的手机号已注册,请登陆!")
+            raise serializers.ValidationError("您输入的手机号已注册,请登陆")
 
         # 验证发送频率
         one_mintes_ago = datetime.now() - timedelta(hours=0, minutes=1, seconds=0)
         if VerifyCode.objects.filter(created__gt=one_mintes_ago, mobile=mobile):
-            raise serializers.ValidationError("验证频率过高，请一分钟后重试!")
+            raise serializers.ValidationError("验证频率过高，请一分钟后重试")
 
         return mobile

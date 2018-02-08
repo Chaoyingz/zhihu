@@ -17,3 +17,8 @@ export const fetchQuestionDetail = params => {
 export const fetchLogin = params => {
   return axios.post(`${baseUrl}login/`, params)
 }
+
+// 获取验证码
+export const fetchSmsCode = params => {
+  return axios.post(`${baseUrl}codes/`, params)
+}
