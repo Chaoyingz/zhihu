@@ -6,7 +6,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token
 
 from Question.views import AnswerViewset, TopicViewset, QuestionViewset
-from Account.views import UserProfileViewSet
+from Account.views import UserProfileViewSet, SmsCodeViewSet
 
 
 router = DefaultRouter()
@@ -15,6 +15,7 @@ router.register(r'answers', AnswerViewset, base_name='answer')
 router.register(r'topics', TopicViewset, base_name='topic')
 router.register(r'questions', QuestionViewset, base_name='question')
 router.register(r'users', UserProfileViewSet, base_name='user')
+router.register(r'codes', SmsCodeViewSet, base_name='code')
 
 
 urlpatterns = [

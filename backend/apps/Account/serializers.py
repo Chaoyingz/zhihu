@@ -31,7 +31,7 @@ class UserProfileSerializers(serializers.ModelSerializer):
                        request=request)
 
 
-class SmsSerializers(serializers.ModelSerializer):
+class SmsSerializers(serializers.Serializer):
 
     """
     验证码序列化

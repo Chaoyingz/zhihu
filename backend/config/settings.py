@@ -125,6 +125,9 @@ AUTHENTICATION_BACKENDS = {
      'Account.views.CustomBackend',
 }
 
+# SMS key
+SMS_KEY = os.environ.get('SMS_KEY')
+
 # 跨域
 CORS_ORIGIN_ALLOW_ALL = True
 
