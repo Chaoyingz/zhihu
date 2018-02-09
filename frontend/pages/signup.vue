@@ -46,7 +46,7 @@
               <div class="register-mobile-input">
                 <input type="text" v-model="registerInfo.mobile"
                 placeholder="手机号" v-show="!registerMask.mobile"
-                v-focus="focus.mobile" @blur="focus.mobile=false">
+                v-focus="focus === 'mobile'" @blur="focus=''">
                 <div class="error-mask mobile" v-show="registerMask.mobile || regError.mobile"
                 @click="toggleMask('mobile')">
                   <span class="error" v-show="regError.mobile">{{ regError.mobile }}</span>
@@ -58,8 +58,7 @@
             <div class="input-container register-code">
               <div class="register-code-input" v-show="!registerMask.code">
                 <input type="code" v-model="registerInfo.code"
-                placeholder="验证码" v-focus="focus.code"
-                @blur="focus.code=false">
+                placeholder="验证码" v-focus="focus === 'code'" @blur="focus=''">
               </div>
               <div class="error-mask" v-show="registerMask.code"
               @click="toggleMask('code')">
@@ -72,9 +71,29 @@
                 {{ timeInterval }}秒后可重发
               </button>
             </div>
-            <div class="form-options">
-              <button type="button">接收语音验证码</button>
+
+            <div class="input-container register-username">
+              <input type="text" v-model="registerInfo.username"
+              placeholder="用户名" v-show="!registerMask.username"
+              v-focus="focus === 'username'" @blur="focus=''">
+              <div class="error-mask username" v-show="registerMask.username || regError.username"
+              @click="toggleMask('username')">
+                <span class="error" v-show="regError.username">{{ regError.username }}</span>
+                <span v-show="registerMask.username">请输入用户名</span>
+              </div>
             </div>
+
+            <div class="input-container register-password">
+              <input type="text" v-model="registerInfo.password"
+              placeholder="密码" v-show="!registerMask.password"
+              v-focus="focus === 'password'" @blur="focus=''">
+              <div class="error-mask password" v-show="registerMask.password || regError.password"
+              @click="toggleMask('password')">
+                <span class="error" v-show="regError.password">{{ regError.password }}</span>
+                <span v-show="registerMask.password">请输入密码</span>
+              </div>
+            </div>
+
             <button type="submit">注册</button>
           </form>
         </div>
@@ -102,7 +121,7 @@
 <script>
 import {mapActions} from 'vuex'
 
-import {fetchLogin, fetchSmsCode} from '../api/api'
+import {fetchLogin, fetchSmsCode, fetchRegister} from '../api/api'
 export default {
   data () {
     return {
@@ -112,11 +131,15 @@ export default {
         },
         registerInfo: {
           mobile: '',
-          code: ''
+          code: '',
+          username: '',
+          password: '',
         },
         registerMask: {
           mobile: true,
-          code: true
+          code: true,
+          username: true,
+          password: true,
         },
         isLoginPage: true,
         timeInterval: 60,
@@ -124,11 +147,9 @@ export default {
         regError: {
           mobile: '',
           code: '',
+          username: '',
         },
-        focus: {
-          mobile: false,
-          code: false,
-        },
+        focus: '',
     }
   },
   methods: {
@@ -146,18 +167,36 @@ export default {
 
       })
     },
+    register () {
+      let self = this
+      fetchRegister (this.registerInfo)
+      .then (res => {
+        localStorage.setItem('username', res.data.username)
+        localStorage.setItem('token', res.data.token)
+        this.$store.dispatch('userLogin')
+        self.$router.push('/')
+      })
+    },
     pageSwitch () {
       this.isLoginPage = !this.isLoginPage
     },
     toggleMask (div) {
       if (div === 'mobile') {
         this.registerMask.mobile = false
-        this.focus.mobile = true
+        this.focus = 'mobile'
         this.regError.mobile = ''
       } else if (div === 'code') {
         this.registerMask.code = false
-        this.focus.code = true
+        this.focus = 'code'
         this.regError.code = ''
+      } else if (div === 'username') {
+        this.registerMask.username = false
+        this.focus = 'username'
+        this.regError.username = ''
+      } else if (div === 'password') {
+        this.registerMask.password = false
+        this.focus = 'password'
+        this.regError.password = ''
       }
     },
     fetchSms () {

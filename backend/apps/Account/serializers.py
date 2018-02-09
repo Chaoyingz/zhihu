@@ -65,6 +65,11 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     用户注册序列化
     """
 
+    mobile = serializers.CharField(
+            label="手机号", required=True, allow_blank=False,
+            validators=[UniqueValidator(queryset=User.objects.all(),
+                                        message="手机号已注册")])
+
     code = serializers.CharField(required=True, write_only=True, max_length=4,
                                  min_length=4, label="验证码", error_messages={
                                     "blank": "请输入验证码",
@@ -75,7 +80,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     username = serializers.CharField(
             label="用户名", required=True, allow_blank=False,
             validators=[UniqueValidator(queryset=User.objects.all(),
-                                        message="手机号已注册")])
+                                        message="用户名已存在")])
     password = serializers.CharField(
             style={'input_type': 'password'}, label="密码", write_only=True
             )
@@ -84,22 +89,23 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         verify_records = VerifyCode.objects.filter(
                 mobile=self.initial_data["mobile"]
             ).order_by("-created")
+        print(verify_records)
+        print(self.initial_data["mobile"])
         if verify_records:
             last_record = verify_records[0]
             five_mintes_ago = datetime.now() - timedelta(hours=0, minutes=5,
                                                          seconds=0)
             if five_mintes_ago > last_record.created:
                 raise serializers.ValidationError("验证码已过期")
-            if last_record != code:
+            if last_record.code != code:
                 raise serializers.ValidationError("验证码错误")
         else:
             raise serializers.ValidationError("验证码错误")
 
     def validate(self, attrs):
-        attrs["mobile"] = attrs["username"]
         del attrs["code"]
         return attrs
 
     class Meta:
         model = User
-        fields = ("username", "code", "mobile", "password")
+        fields = ("mobile", "code", "username", "password")

@@ -9,11 +9,9 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-from rest_framework_jwt.serializers import jwt_encode_handler, \
-                                           jwt_payload_handler
+from rest_framework_jwt.serializers import jwt_encode_handler, jwt_payload_handler
 
-from .serializers import UserProfileSerializer, SmsSerializer, \
-                          UserRegisterSerializer
+from .serializers import UserProfileSerializer, SmsSerializer, UserRegisterSerializer
 from utils.sms import YunPian
 from config.settings import SMS_KEY
 from .models import VerifyCode
@@ -47,8 +45,7 @@ class BasePagination(PageNumberPagination):
     max_page_size = 100
 
 
-class UserProfileViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                         viewsets.GenericViewSet):
+class UserProfileViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     """
     用户
@@ -98,8 +95,7 @@ class SmsCodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
             }, status=status.HTTP_201_CREATED)
 
 
-class UserRegisterViewset(mixins.CreateModelMixin, mixins.UpdateModelMixin,
-                          mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class UserRegisterViewset(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     """
     用户注册
@@ -115,12 +111,9 @@ class UserRegisterViewset(mixins.CreateModelMixin, mixins.UpdateModelMixin,
         re_dict = serializer.data
         payload = jwt_payload_handler(user)
         re_dict["token"] = jwt_encode_handler(payload)
-        re_dict["name"] = user.name if user.name else user.username
+        re_dict["username"] = user.username
         headers = self.get_success_headers(serializer.data)
         return Response(re_dict, status=status.HTTP_201_CREATED, headers=headers)
-
-    def get_object(self):
-        return self.request.user
 
     def perform_create(self, serializer):
         return serializer.save()

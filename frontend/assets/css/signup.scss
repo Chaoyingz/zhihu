@@ -65,6 +65,7 @@ input {
   .error {
     position: absolute;
     right: 0;
+    background-color: #fff;
     &:before {
       position: absolute;
       top: 0;
@@ -165,13 +166,6 @@ input {
     button.hide {
       color: #8590a6;
       cursor: default;
-    }
-  }
-  .form-options {
-    display: block;
-    button {
-      float: right;
-      color: #8590a6;
     }
   }
 }

@@ -22,3 +22,8 @@ export const fetchLogin = params => {
 export const fetchSmsCode = params => {
   return axios.post(`${baseUrl}codes/`, params)
 }
+
+// 注册
+export const fetchRegister = params => {
+  return axios.post(`${baseUrl}register/`, params)
+}
