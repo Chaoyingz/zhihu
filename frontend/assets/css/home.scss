@@ -1,4 +1,6 @@
 #main-container {
+  display: flex;
+  align-items: flex-start;
   margin-top: 10px;
   min-height: 100vh;
 }
@@ -13,6 +15,7 @@ main {
   padding-top: 68px;
   width: 690px;
   min-height: 200px;
+  margin-right: 10px;
 }
 
 /** RECOMMEND ANSWER **/
@@ -155,3 +158,36 @@ main {
 /** RECOMMEND ANSWER **/
 
 /** RECOMMEND LIST END **/
+
+/** SIDE CONTAINER BEGIN **/
+#side-container {
+  width: 280px;
+  height: auto;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(26,26,26,.1);
+  overflow: hidden;
+  border-radius: 3px;
+}
+.nav-list {
+  padding: 8px 0;
+  >li {
+    list-style-type: none;
+    &:hover {
+      background: #f6f6f6;
+    }
+    >a {
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      height: 40px;
+      overflow: hidden;
+      font-size: 14px;
+      color: #8590a6;
+      text-align: center;
+      span {
+        margin: 0 10px;
+      }
+    }
+  }
+}
+/** SIDE CONTAINER END **/

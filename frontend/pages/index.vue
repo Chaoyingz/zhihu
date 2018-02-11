@@ -55,6 +55,31 @@
     </main>
     <!-- RECOMMEND LIST END -->
 
+    <!-- SIDE CONTAINER BEGIN -->
+    <section id="side-container">
+      <ul class="nav-list">
+        <li>
+          <a href="#">
+            <icon name="star" scale="1"></icon>
+            <span>我的收藏</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <icon name="question-circle" scale="1"></icon>
+            <span>我关注的问题</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <icon name="user-plus" scale="1"></icon>
+            <span>我的邀请</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- SIDE CONTAINER END -->
+
   </div>
 </template>
 
