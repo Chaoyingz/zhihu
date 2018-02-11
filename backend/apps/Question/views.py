@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
-from .serializers import AnswerSerializers, TopicSerializers, QuestionSerializers
+from .serializers import AnswerSerializer, TopicSerializer, QuestionSerializer
 from .models import Answer, Topic, Question
 
 
@@ -18,39 +18,36 @@ class BasePagination(PageNumberPagination):
     max_page_size = 100
 
 
-class AnswerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                    viewsets.GenericViewSet):
+class AnswerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     """
     回答
     """
 
     queryset = Answer.objects.all()
-    serializer_class = AnswerSerializers
+    serializer_class = AnswerSerializer
     pagination_class = BasePagination
 
 
-class TopicViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                   viewsets.GenericViewSet):
+class TopicViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     """
     话题
     """
 
     queryset = Topic.objects.all()
-    serializer_class = TopicSerializers
+    serializer_class = TopicSerializer
     pagination_class = BasePagination
 
 
-class QuestionViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                      viewsets.GenericViewSet):
+class QuestionViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     """
     问题
     """
 
     queryset = Question.objects.all()
-    serializer_class = QuestionSerializers
+    serializer_class = QuestionSerializer
     pagination_class = BasePagination
 
     def retrieve(self, request, *args, **kwargs):

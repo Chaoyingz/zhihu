@@ -6,7 +6,7 @@ import datetime
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Apps directory
-sys.path.insert(0, os.path.join(BASE_DIR,"apps"))
+sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '3be3ybaw+zu6y4x62q^h+vvy9-)63t&3$4mxabd^fre45^0kb%'
@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 
     'Question',
     'Account',
+    'AccountOperation',
 ]
 
 MIDDLEWARE = [

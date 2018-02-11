@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
-
+from django.db import IntegrityError
 
 User = get_user_model()
 
@@ -92,10 +92,30 @@ class Answer(models.Model):
     updated = models.DateTimeField(auto_now=True, verbose_name="更新日期")
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
                               default='draft', verbose_name="回答状态")
-    vote = models.PositiveIntegerField(default=0, verbose_name="赞同数")
+    vote = models.IntegerField(default=0, verbose_name="赞同数")
     collection = models.ForeignKey(User, verbose_name="收藏", blank=True,
                                    null=True, on_delete=models.CASCADE,
                                    related_name="collection")
+
+    # 赞同问题
+    def up_vote(self, user):
+        try:
+            self.vote_operation.create(user=user, answer=self, vote_type='up')
+            self.vote += 1
+            self.save()
+        except IntegrityError:
+            return 'already_upvoted'
+        return 'ok'
+
+    # 反对问题
+    def down_vote(self, user):
+        try:
+            self.vote_operation.create(user=user, answers=self, vote_type='down')
+            self.vote -= 1
+            self.save()
+        except IntegrityError:
+            return 'already_downvoted'
+        return 'ok'
 
     class Meta:
         ordering = ('-publish',)
