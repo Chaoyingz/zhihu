@@ -55,12 +55,12 @@ input {
 .error-mask {
   position: absolute;
   top: 0;
-  height: 49px;
+  height: 47px;
   width: 100%;
   font-size: 14px;
   color: #f1403c;
   text-align: left;
-  line-height: 49px;
+  line-height: 47px;
   cursor: text;
   .error {
     position: absolute;
@@ -155,7 +155,7 @@ input {
     position: relative;
     button.show, button.hide {
       position: absolute;
-      top: 15px;
+      top: 11px;
       right: 0;
       padding: 4px 0;
       color: #175199;
@@ -167,6 +167,12 @@ input {
       color: #8590a6;
       cursor: default;
     }
+    .register-code-input {
+      width: 250px;
+    }
+  }
+  .error-mask.code {
+    width: 250px;
   }
 }
 /** REGISTER CONTAINER END **/

@@ -60,9 +60,10 @@
                 <input type="code" v-model="registerInfo.code"
                 placeholder="验证码" v-focus="focus === 'code'" @blur="focus=''">
               </div>
-              <div class="error-mask" v-show="registerMask.code"
+              <div class="error-mask code" v-show="registerMask.code || regError.code"
               @click="toggleMask('code')">
-                <span>请输入短信验证码</span>
+                <span class="error" v-show="regError.code">{{ regError.code }}</span>
+                <span v-show="registerMask.code">请输入短信验证码</span>
               </div>
               <button class="show" type="button" @click="fetchSms" v-show="codeBtn">
                 获取短信验证码
@@ -162,9 +163,11 @@ export default {
         localStorage.setItem('token', res.data.token)
         this.$store.dispatch('userLogin')
         self.$router.push('/')
+        this.$toasted.show(`登陆成功!`, { duration: 3000, position: "bottom-right", })
       })
       .catch (err => {
-
+        let error = err.response.data.non_field_errors[0]
+        this.$toasted.show(`登陆错误, ${error}`, { duration: 3000, position: "bottom-right", })
       })
     },
     register () {
@@ -175,6 +178,12 @@ export default {
         localStorage.setItem('token', res.data.token)
         this.$store.dispatch('userLogin')
         self.$router.push('/')
+        this.$toasted.show(`注册成功!`, { duration: 3000, position: "bottom-right", })
+      })
+      .catch(err => {
+        this.regError.code = err.response.data.code ? err.response.data.code[0] : ''
+        this.regError.username = err.response.data.username ? err.response.data.username[0] : ''
+        this.regError.password = err.response.data.password ? err.response.data.password[0] : ''
       })
     },
     pageSwitch () {

@@ -82,15 +82,17 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             validators=[UniqueValidator(queryset=User.objects.all(),
                                         message="用户名已存在")])
     password = serializers.CharField(
-            style={'input_type': 'password'}, label="密码", write_only=True
+            min_length=6, label="密码", write_only=True,
+            style={'input_type': 'password'},
+            error_messages={
+                "min_length": "密码最少为6位"
+            }
             )
 
     def validate_code(self, code):
         verify_records = VerifyCode.objects.filter(
                 mobile=self.initial_data["mobile"]
             ).order_by("-created")
-        print(verify_records)
-        print(self.initial_data["mobile"])
         if verify_records:
             last_record = verify_records[0]
             five_mintes_ago = datetime.now() - timedelta(hours=0, minutes=5,
@@ -105,6 +107,12 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         del attrs["code"]
         return attrs
+
+    def create(self, validated_data):
+        user = super(UserRegisterSerializer, self).create(validated_data=validated_data)
+        user.set_password(validated_data["password"])
+        user.save()
+        return user
 
     class Meta:
         model = User
