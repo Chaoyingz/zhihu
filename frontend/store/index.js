@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 import mutations from './mutations'
 import actions from './actions'
@@ -12,11 +13,13 @@ const state = {
     isLogin: false,
 }
 
+
 const createStore = () => {
   return new Vuex.Store({
     state,
     mutations,
-    actions
+    actions,
+
   })
 }
 

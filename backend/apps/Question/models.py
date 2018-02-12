@@ -98,9 +98,8 @@ class Answer(models.Model):
                                    related_name="collection")
 
     # 赞同问题
-    def up_vote(self, user):
+    def up_vote(self):
         try:
-            self.vote_operation.create(user=user, answer=self, vote_type='up')
             self.vote += 1
             self.save()
         except IntegrityError:
@@ -108,9 +107,8 @@ class Answer(models.Model):
         return 'ok'
 
     # 反对问题
-    def down_vote(self, user):
+    def down_vote(self):
         try:
-            self.vote_operation.create(user=user, answers=self, vote_type='down')
             self.vote -= 1
             self.save()
         except IntegrityError:

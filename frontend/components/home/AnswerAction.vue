@@ -2,11 +2,11 @@
   <div class="answer-actions">
 
     <span class="answer-vote">
-      <button type="button">
+      <button type="button" @click="optVote('up', answerId)">
         <icon name="sort-up" scale="1.2"></icon>
         {{ vote }}
       </button>
-      <button type="button">
+      <button type="button" @click="optVote('down', answerId)">
         <icon name="sort-down" scale="1.2"></icon>
       </button>
     </span>
@@ -39,8 +39,34 @@
 </template>
 
 <script>
+import {fetchUserVote} from '../../api/api'
+
 export default {
-  props: ['vote'],
+  props: ['vote', 'answerId'],
+  methods: {
+    // 赞同 & 反对问题
+    optVote (type, id) {
+      if (type == 'up') {
+        let params = {
+          answer: `${id}`,
+          vote_type: 'up'
+        }
+        fetchUserVote(params)
+        .then (res => {
+
+        })
+      } else if (type == 'down') {
+        let params = {
+          answer: `${id}`,
+          vote_type: 'down'
+        }
+        fetchUserVote(params)
+        .then (res => {
+
+        })
+      }
+    },
+  }
 }
 </script>
 

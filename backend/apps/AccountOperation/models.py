@@ -18,7 +18,7 @@ class UserVote(models.Model):
     answer = models.ForeignKey(Answer, verbose_name="回答", related_name='vote_operation',
                                on_delete=models.CASCADE)
     created = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
-    vote_type = models.CharField(max_length=10)
+    vote_type = models.CharField(max_length=10, choices=(('up', "支持"), ('down', "反对")))
 
     class Meta:
         unique_together = ('user', 'answer', 'vote_type')
