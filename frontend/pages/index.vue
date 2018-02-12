@@ -43,7 +43,7 @@
           <span>{{ answer.text }}</span>
         </div>
 
-        <AnswerAction :vote="answer.vote" :answerId="answer.id">
+        <AnswerAction :vote="answer.vote" :answerId="answer.id" :answerIndex="index">
         </AnswerAction>
 
       </div>

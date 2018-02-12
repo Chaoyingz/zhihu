@@ -116,7 +116,7 @@ class Answer(models.Model):
         return 'ok'
 
     class Meta:
-        ordering = ('-publish',)
+        ordering = ('-vote',)
         verbose_name = "回答"
         verbose_name_plural = verbose_name
 

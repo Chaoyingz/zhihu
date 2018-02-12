@@ -2,11 +2,13 @@
   <div class="answer-actions">
 
     <span class="answer-vote">
-      <button type="button" @click="optVote('up', answerId)">
+      <button type="button" @click="optVote('up', answerId)"
+      :class="{'active': upVoteStatus[answerIndex]}">
         <icon name="sort-up" scale="1.2"></icon>
         {{ vote }}
       </button>
-      <button type="button" @click="optVote('down', answerId)">
+      <button type="button" @click="optVote('down', answerId)"
+      :class="{'active': downVoteStatus[answerIndex]}">
         <icon name="sort-down" scale="1.2"></icon>
       </button>
     </span>
@@ -39,10 +41,16 @@
 </template>
 
 <script>
-import {fetchUserVote} from '../../api/api'
+import {fetchUserVote, fetchAddUserVote, fetchDelUserVote} from '../../api/api'
 
 export default {
-  props: ['vote', 'answerId'],
+  props: ['vote', 'answerId', 'answerIndex'],
+  data () {
+    return {
+      upVoteStatus: [],
+      downVoteStatus: [],
+    }
+  },
   methods: {
     // 赞同 & 反对问题
     optVote (type, id) {
@@ -51,21 +59,43 @@ export default {
           answer: `${id}`,
           vote_type: 'up'
         }
-        fetchUserVote(params)
+        fetchAddUserVote(params)
         .then (res => {
-
+          this.$set(this.upVoteStatus, this.answerIndex, true)
+          this.vote += 1
         })
       } else if (type == 'down') {
         let params = {
           answer: `${id}`,
           vote_type: 'down'
         }
-        fetchUserVote(params)
+        fetchAddUserVote(params)
         .then (res => {
-
+          this.$set(this.downVoteStatus, this.answerIndex, true)
+          this.vote -= 1
         })
       }
     },
+    // 获取当前用户 赞同 & 反对问题 列表
+    fetchData () {
+      fetchUserVote ()
+      .then (res => {
+
+        for (let i=0; i < res.data.length; i++) {
+          if (this.answerId == res.data[i]["answer"]) {
+            if (res.data[i]["vote_type"] == 'up') {
+              this.$set(this.upVoteStatus, this.answerIndex, true)
+            } else if (res.data[i]["vote_type"] == 'down') {
+              this.$set(this.downVoteStatus, this.answerIndex, true)
+            }
+          }
+        }
+
+      })
+    },
+  },
+  created () {
+    this.fetchData()
   }
 }
 </script>

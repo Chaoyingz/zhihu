@@ -79,7 +79,8 @@
             <div class="answer-publish">
               <span>发布于 {{ pubTime(answer.publish) }}</span>
             </div>
-            <AnswerAction :vote="answer.vote"></AnswerAction>
+            <AnswerAction :vote="answer.vote" :answerId="answer.id" :answerIndex="index">
+            </AnswerAction>
           </div>
 
           </div>

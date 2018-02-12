@@ -2,9 +2,15 @@ import axios from 'axios'
 
 const baseUrl = 'http://localhost:8000/api/v1/'
 
-// const token = localStorage.getItem('token') ? localStorage.getItem('token') : null
-// axios.defaults.headers.common['Authorization'] = `JWT ${token}`
+if (!process.server) {
+  var token = localStorage.getItem('token')
+} else {
+  var token = null
+}
 
+const config = {
+  headers: {'Authorization': 'JWT ' + token}
+}
 
 // 获取问题列表
 export const fetchQuestions = () => { return axios.get(`${baseUrl}questions/`) }
@@ -32,7 +38,17 @@ export const fetchRegister = params => {
   return axios.post(`${baseUrl}register/`, params)
 }
 
+// 获取当前用户赞同 / 反对问题列表
+export const fetchUserVote = () => {
+  return axios.get(`${baseUrl}votes/`, config)
+}
+
 // 赞同 / 反对回答
-export const fetchUserVote = params => {
-  return axios.post(`${baseUrl}votes/`, params)
+export const fetchAddUserVote = params => {
+  return axios.post(`${baseUrl}votes/`, params, config)
+}
+
+// 取消赞同反对
+export const fetchDelUserVote = params => {
+  return axios.delete(`${baseUrl}votes/`, params, config)
 }

@@ -1,7 +1,7 @@
 from rest_framework import mixins
 from rest_framework import viewsets
-from rest_framework import status
-from rest_framework.response import Response
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.authentication import SessionAuthentication
 
 from .serializers import UserVoteSerializer
 from .models import UserVote
@@ -11,10 +11,11 @@ class UserVoteViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets
                       mixins.CreateModelMixin, mixins.DestroyModelMixin):
 
     """
-    用户支持 / 反对
+    用户赞同 / 反对
     """
 
     serializer_class = UserVoteSerializer
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
     def get_queryset(self):
         return UserVote.objects.filter(user=self.request.user)

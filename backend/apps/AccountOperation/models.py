@@ -21,6 +21,6 @@ class UserVote(models.Model):
     vote_type = models.CharField(max_length=10, choices=(('up', "支持"), ('down', "反对")))
 
     class Meta:
-        unique_together = ('user', 'answer', 'vote_type')
+        unique_together = ('user', 'answer')
         verbose_name = "用户赞同反对"
         verbose_name_plural = verbose_name

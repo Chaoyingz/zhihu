@@ -27,6 +27,10 @@
       background-color: rgba(0,132,255,.15);
     }
   }
+  .answer-vote > button.active {
+    color: #fff;
+    background-color: #0084ff;
+  }
   .answer-vote > button:last-child svg {
     position: relative;
     top: 0;
