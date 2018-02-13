@@ -38,9 +38,9 @@ export const fetchRegister = params => {
   return axios.post(`${baseUrl}register/`, params)
 }
 
-// 获取当前用户赞同 / 反对问题列表
-export const fetchUserVote = () => {
-  return axios.get(`${baseUrl}votes/`, config)
+// 获取当前用户赞同 / 反对问题状态列表
+export const fetchUserVote = params => {
+  return axios.get(`${baseUrl}votes/?search=${params}`, config)
 }
 
 // 赞同 / 反对回答
@@ -50,5 +50,5 @@ export const fetchAddUserVote = params => {
 
 // 取消赞同反对
 export const fetchDelUserVote = params => {
-  return axios.delete(`${baseUrl}votes/`, params, config)
+  return axios.delete(`${baseUrl}votes/${params}/`, config)
 }

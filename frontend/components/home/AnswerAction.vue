@@ -3,12 +3,12 @@
 
     <span class="answer-vote">
       <button type="button" @click="optVote('up', answerId)"
-      :class="{'active': upVoteStatus[answerIndex]}">
+      :class="{'active': selfVoteStatus == 'up'}">
         <icon name="sort-up" scale="1.2"></icon>
-        {{ vote }}
+        {{ numOfVote }}
       </button>
       <button type="button" @click="optVote('down', answerId)"
-      :class="{'active': downVoteStatus[answerIndex]}">
+      :class="{'active': selfVoteStatus == 'down'}">
         <icon name="sort-down" scale="1.2"></icon>
       </button>
     </span>
@@ -41,61 +41,60 @@
 </template>
 
 <script>
-import {fetchUserVote, fetchAddUserVote, fetchDelUserVote} from '../../api/api'
+import {fetchAddUserVote, fetchDelUserVote} from '../../api/api'
 
 export default {
-  props: ['vote', 'answerId', 'answerIndex'],
+  props: {vote: Number, answerId: Number, answerIndex: Number,
+          voteStatus: {
+            type: String,
+            default: ''
+          },
+  },
   data () {
     return {
-      upVoteStatus: [],
-      downVoteStatus: [],
+      numOfVote: JSON.parse(this.vote),
+      selfVoteStatus: this.voteStatus
     }
   },
   methods: {
     // 赞同 & 反对问题
     optVote (type, id) {
-      if (type == 'up') {
-        let params = {
-          answer: `${id}`,
-          vote_type: 'up'
+
+      if (this.selfVoteStatus) {
+        if (this.selfVoteStatus == type) {
+          fetchDelUserVote (id)
+          .then (res => {
+            this.selfVoteStatus = ''
+            type == 'up' ? this.numOfVote -= 1 : this.numOfVote += 1
+          })
+        } else {
+          fetchDelUserVote (id)
+          .then (res => {
+            type == 'up' ? this.numOfVote += 1 : this.numOfVote -= 1
+            this.AddUserVote(type, id)
+          })
         }
-        fetchAddUserVote(params)
-        .then (res => {
-          this.$set(this.upVoteStatus, this.answerIndex, true)
-          this.vote += 1
-        })
-      } else if (type == 'down') {
-        let params = {
-          answer: `${id}`,
-          vote_type: 'down'
-        }
-        fetchAddUserVote(params)
-        .then (res => {
-          this.$set(this.downVoteStatus, this.answerIndex, true)
-          this.vote -= 1
-        })
+      } else {
+        this.AddUserVote(type, id)
       }
+
     },
-    // 获取当前用户 赞同 & 反对问题 列表
-    fetchData () {
-      fetchUserVote ()
+
+    AddUserVote (type, id) {
+      let params = {
+        "answer": id,
+        "vote_type": type
+      }
+      fetchAddUserVote (params)
       .then (res => {
-
-        for (let i=0; i < res.data.length; i++) {
-          if (this.answerId == res.data[i]["answer"]) {
-            if (res.data[i]["vote_type"] == 'up') {
-              this.$set(this.upVoteStatus, this.answerIndex, true)
-            } else if (res.data[i]["vote_type"] == 'down') {
-              this.$set(this.downVoteStatus, this.answerIndex, true)
-            }
-          }
-        }
-
+        this.selfVoteStatus = type
+        type == 'up' ? this.numOfVote += 1 : this.numOfVote -= 1
       })
     },
+
   },
   created () {
-    this.fetchData()
+    console.log(this.selfVoteStatus)
   }
 }
 </script>

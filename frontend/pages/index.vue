@@ -43,7 +43,8 @@
           <span>{{ answer.text }}</span>
         </div>
 
-        <AnswerAction :vote="answer.vote" :answerId="answer.id" :answerIndex="index">
+        <AnswerAction :vote="answer.vote" :answerId="answer.id" :answerIndex="index"
+        :voteStatus="voteStatusList[answer.id]">
         </AnswerAction>
 
       </div>
@@ -85,7 +86,7 @@
 </template>
 
 <script>
-import {fetchAnswers} from '../api/api'
+import {fetchAnswers, fetchUserVote} from '../api/api'
 import AnswerAction from '../components/Home/AnswerAction'
 import DashBoard from '../components/Home/DashBoard'
 export default {
@@ -101,17 +102,26 @@ export default {
     return {
       recommendList: [],
       contentStatus: [],
+      voteStatusList: {},
     }
   },
   methods: {
-    // 获取回答JSON
+    // 获取回答JSON & 获取回答VOTE状态
     fetchData () {
       fetchAnswers()
       .then (res => {
         this.recommendList = res.data.results
       })
-      .catch (err => {
+      fetchUserVote('')
+      .then (res => {
 
+        for (let i=0; i < res.data.length; i++) {
+          this.voteStatusList[res.data[i]["answer"]] = res.data[i]["vote_type"]
+        }
+
+      })
+      .catch (err => {
+        console.log(err.response.data)
       })
     },
     // 问题文本截取

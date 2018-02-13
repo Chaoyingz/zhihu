@@ -7,12 +7,6 @@ module.exports = {
     '@assets/css/common.css',
   ],
   /*
-  ** Global modules
-  */
-  modules: [
-    '@nuxtjs/axios',
-  ],
-  /*
   **  Global plugin
   */
   plugins: [
