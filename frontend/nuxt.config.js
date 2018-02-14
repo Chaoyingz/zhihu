@@ -34,6 +34,7 @@ module.exports = {
   /*
   ** Build configuration
   */
+  mode: 'spa',
   build: {
     /*
     ** Run ESLint on save
