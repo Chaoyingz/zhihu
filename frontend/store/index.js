@@ -7,7 +7,7 @@ import actions from './actions'
 
 const state = {
     userInfo: {
-      userName: null,
+      username: null,
       token: null,
     },
     isLogin: false,

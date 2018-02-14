@@ -155,13 +155,16 @@ export default {
   },
   methods: {
     ...mapActions(['userLogin']),
+    // 登陆
     login () {
       let self = this
       fetchLogin (this.loginInfo)
       .then (res => {
-        localStorage.setItem('username', res.data.username)
-        localStorage.setItem('token', res.data.token)
-        this.$store.dispatch('userLogin')
+        const user = {
+          username: res.data.username,
+          token: res.data.token
+        }
+        this.$store.dispatch('userLogin', user)
         self.$router.push('/')
         this.$toasted.show(`登陆成功!`, { duration: 3000, position: "bottom-right", })
       })
@@ -170,13 +173,16 @@ export default {
         this.$toasted.show(`登陆错误, ${error}`, { duration: 3000, position: "bottom-right", })
       })
     },
+    // 注册
     register () {
       let self = this
       fetchRegister (this.registerInfo)
       .then (res => {
-        localStorage.setItem('username', res.data.username)
-        localStorage.setItem('token', res.data.token)
-        this.$store.dispatch('userLogin')
+        const user = {
+          username: res.data.username,
+          token: res.data.token
+        }
+        this.$store.dispatch('userLogin', user)
         self.$router.push('/')
         this.$toasted.show(`注册成功!`, { duration: 3000, position: "bottom-right", })
       })

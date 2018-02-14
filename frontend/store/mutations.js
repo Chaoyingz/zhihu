@@ -2,19 +2,17 @@ import * as types from './mutation-types'
 
 export const mutations = {
 
-  [types.LOGIN_IN] (state) {
-    let uname = localStorage.getItem('username')
-    let utoken = localStorage.getItem('token')
+  [types.LOGIN_IN] (state, user) {
     state.userInfo = {
-      userName: uname,
-      token: utoken
+      username: user.username,
+      token: user.token
     }
     state.isLogin = true
   },
 
   [types.LOGIN_OUT] (state) {
     state.userInfo = {
-      userName: null,
+      username: null,
       token: null
     }
     state.isLogin = false

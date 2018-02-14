@@ -8,8 +8,8 @@ const actions ={
     }
   },
 
-  userLogin({commit}){
-    commit(types.LOGIN_IN);
+  userLogin({commit}, user){
+    commit(types.LOGIN_IN, user)
   },
 
   userLoginOut({commit}){
