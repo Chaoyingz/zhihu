@@ -2,11 +2,9 @@ import axios from 'axios'
 
 const baseUrl = 'http://localhost:8000/api/v1/'
 
-if (!process.server) {
-  var token = localStorage.getItem('token')
-} else {
-  var token = null
-}
+const token = process.browser ? JSON.parse(localStorage.getItem('vuex')).userInfo.token : null
+
+console.log(token)
 
 const config = {
   headers: {'Authorization': 'JWT ' + token}
