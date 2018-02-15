@@ -111,15 +111,15 @@ export default {
         vote_type: type,
         answer: this.answerId
       }
+      if (type == 'up') {
+        this.numOfVote += 1
+        this.upVoteStatus = true
+      } else {
+        this.numOfVote -= 1
+        this.downVoteStatus = true
+      }
       fetchAddUserVote(params)
       .then (res => {
-        if (type == 'up') {
-          this.numOfVote += 1
-          this.upVoteStatus = true
-        } else {
-          this.numOfVote -= 1
-          this.downVoteStatus = true
-        }
       })
     }
 

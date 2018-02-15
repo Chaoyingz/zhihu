@@ -80,7 +80,7 @@
               <span>发布于 {{ pubTime(answer.publish) }}</span>
             </div>
             <AnswerAction :vote="answer.vote" :answerId="answer.id" :answerIndex="index"
-            :voteStatus="voteStatusList[answer.id]">
+            :voteStatus="voteStatus">
             </AnswerAction>
           </div>
 
@@ -113,24 +113,19 @@ export default {
     return {
       title: '加载中... ',
       question: [],
-      voteStatusList: {},
+      voteStatus: [],
     }
   },
   methods: {
     fetchData () {
+      fetchUserVote(this.$route.params.id)
+      .then (res => {
+        this.voteStatus = res.data
+      })
       fetchQuestionDetail(this.$route.params.id)
       .then (res => {
         this.question = res.data
         this.title = res.data.title
-      })
-      fetchUserVote(this.$route.params.id)
-      .then (res => {
-        for (let i=0; i < res.data.length; i++) {
-          this.voteStatusList[res.data[i]["answer"]] = res.data[i]["vote_type"]
-        }
-      })
-      .catch (err => {
-        console.log(err.response.data)
       })
     },
     pubTime (time) {
