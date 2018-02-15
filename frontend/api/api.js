@@ -4,8 +4,6 @@ const baseUrl = 'http://localhost:8000/api/v1/'
 
 const token = process.browser ? JSON.parse(localStorage.getItem('vuex')).userInfo.token : null
 
-console.log(token)
-
 const config = {
   headers: {'Authorization': 'JWT ' + token}
 }

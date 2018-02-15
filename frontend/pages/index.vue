@@ -44,7 +44,7 @@
         </div>
 
         <AnswerAction :vote="answer.vote" :answerId="answer.id" :answerIndex="index"
-        :voteStatus="voteStatusList[answer.id]">
+        :voteStatus="voteStatus">
         </AnswerAction>
 
       </div>
@@ -102,26 +102,19 @@ export default {
     return {
       recommendList: [],
       contentStatus: [],
-      voteStatusList: {},
+      voteStatus: [],
     }
   },
   methods: {
     // 获取回答JSON & 获取回答VOTE状态
     fetchData () {
+      fetchUserVote('')
+      .then (res => {
+        this.voteStatus = res.data
+      })
       fetchAnswers()
       .then (res => {
         this.recommendList = res.data.results
-      })
-      fetchUserVote('')
-      .then (res => {
-
-        for (let i=0; i < res.data.length; i++) {
-          this.voteStatusList[res.data[i]["answer"]] = res.data[i]["vote_type"]
-        }
-
-      })
-      .catch (err => {
-        console.log(err.response.data)
       })
     },
     // 问题文本截取

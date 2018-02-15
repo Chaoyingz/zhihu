@@ -19,6 +19,7 @@ class UserVoteViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets
     serializer_class = UserVoteSerializer
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
+    filter_fields = ('vote_type',)
     search_fields = ('answer__question__id',)
     lookup_field = "answer"
 
