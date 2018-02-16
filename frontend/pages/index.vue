@@ -29,7 +29,7 @@
           </h2>
         </div>
 
-        <div class="answer-content" v-if="!contentStatus[index]"
+        <div class="answer-content" v-show="!contentStatus[index]"
         @click="toggleContent(index)">
           <span>{{ cutContent(answer.text) }}</span>
           <button type="button">
@@ -39,13 +39,23 @@
         </div>
 
         <!-- TOGGLE CONTENT -->
-        <div class="answer-content" v-if="contentStatus[index]">
+        <div class="answer-content" v-show="contentStatus[index]">
           <span>{{ answer.text }}</span>
+          <div class="answer-publish" v-show="contentStatus[index]">
+            <span>发布于 {{ pubTime(answer.publish) }}</span>
+          </div>
         </div>
 
-        <AnswerAction :vote="answer.vote" :answerId="answer.id" :answerIndex="index"
-        :voteStatus="voteStatus">
-        </AnswerAction>
+        <div class="answer-actions-outside">
+          <AnswerAction :vote="answer.vote" :answerId="answer.id" :answerIndex="index"
+          :voteStatus="voteStatus">
+          </AnswerAction>
+          <button type="button" class="read-less" v-show="contentStatus[index]"
+          @click="toggleContent(index)">
+            收起
+            <icon name="angle-up" scale="1.1"></icon>
+          </button>
+        </div>
 
       </div>
       <!-- RECOMMEND ANSWER END -->
@@ -124,6 +134,10 @@ export default {
       } else {
         return text;
       }
+    },
+    // 时间显示
+    pubTime (time) {
+      return time.slice(0,10)
     },
     // 开关READ MORE
     toggleContent (index) {

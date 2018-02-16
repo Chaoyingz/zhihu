@@ -82,6 +82,11 @@ main {
     color: #1a1a1a;
     font-size: 15px;
     cursor: pointer;
+    .answer-publish {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #8590a6;
+    }
     span {
       &:hover {
         color: #646464;
@@ -100,8 +105,7 @@ main {
       }
     }
   }
-
-  .answer-actions {
+  .answer-actions-outside {
     display: flex;
     align-items: center;
     padding: 10px 20px;
@@ -110,49 +114,16 @@ main {
     button {
       color: #8590a6;
     }
-
-    .answer-vote > button {
-      display: inline-block;
-      padding: 0 12px;
-      color: #0084ff;
-      background: rgba(0,132,255,.1);
-      text-align: center;
-      line-height: 30px;
-      cursor: pointer;
-      border-radius: 3px;
-      margin-right: 4px;
-      svg {
-        position: relative;
-        top: 8px;
-        margin-right: 4px;
-      }
-      &:hover {
-        background-color: rgba(0,132,255,.15);
-      }
-    }
-    .answer-vote > button:last-child svg {
-      position: relative;
-      top: 0;
-      margin: 0;
-    }
-
-    .answer-comment, .answer-share, .answer-collection,
-    .answer-thank, .answer-more {
-      margin-left: 24px;
+    .read-less {
+      margin-left: auto;
       cursor: pointer;
       font-size: 14px;
-      line-height: 20px;
+      line-height: 30px;
       color: #8590a6;
       svg {
-        position: relative;
-        top: 1px;
+        top: 2px;
       }
     }
-
-    .answer-more svg {
-      top: 3px;
-    }
-
   }
 }
 /** RECOMMEND ANSWER **/

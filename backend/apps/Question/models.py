@@ -122,3 +122,12 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class Comment(models.Model):
+
+    """
+    回答评论
+    """
+
+    pass

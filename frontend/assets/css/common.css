@@ -1,6 +1,7 @@
 /** COMMON STYLE BEGIN **/
 body {
   background-color: #f8f9fa;
+  font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
 }
 .inner {
   position: relative;

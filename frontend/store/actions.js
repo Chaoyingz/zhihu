@@ -12,7 +12,7 @@ const actions ={
     commit(types.LOGIN_IN, user)
   },
 
-  userLoginOut({commit}){
+  userLogout({commit}){
     commit(types.LOGIN_OUT)
   }
 

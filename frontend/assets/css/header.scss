@@ -121,9 +121,7 @@ header {
       .accountbar-icon {
         margin-right: 40px;
         padding: 5px 0;
-        &:last-child {
-          margin-right: 0;
-        }
+        width: 20px;
         button {
           color: $default-color;
           cursor: pointer;
@@ -136,3 +134,118 @@ header {
     /** ACCOUNT BAR END **/
   }
 }
+
+/** MESSAGE BEGIN **/
+#info-container {
+  position: fixed;
+  top: 35px;
+  left: 50%;
+  width: 1000px;
+  margin-left: -500px;
+  min-height: 100px;
+}
+.message, .letter, .account {
+  position: absolute;
+  right: -15px;
+  margin-top: 16px;
+  z-index: 1000;
+  width: 360px;
+  height: 420px;
+  background-color: #fff;
+  border: 1px solid #ebebeb;
+  border-radius: 4px;
+  box-shadow: 0 5px 20px rgba(26,26,26,.1);
+  box-sizing: border-box;
+}
+.message:before, .message:after,
+.letter::before, .letter::after,
+.account::before, .account::after {
+  content: '';
+  height: 0;
+  width: 0;
+  border-color: transparent transparent #fff;
+  border-style: solid;
+  border-width: 0 10px 10px;
+  position: absolute;
+  z-index: 100;
+  top: -8px;
+  left: 165px;
+}
+.message:before, .letter::before, .account::before {
+  border-color: transparent transparent #e7eaf1;
+  top: -10px;
+}
+.message-content, .letter-content {
+  height: 380px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.message-empty, .letter-empty {
+  height: 120px;
+  width: 150px;
+  font-size: 15px;
+  color: #8590a6;
+  text-align: center;
+  svg {
+    margin-bottom: 20px;
+    color: rgba(133,152,166,0.5);
+  }
+}
+.message-footer, .letter-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  box-sizing: border-box;
+  border-top: 1px solid #ebebeb;
+  >a {
+    font-size: 14px;
+    line-height: 40px;
+    color: #8590a6;
+    > svg {
+      margin-right: 3px;
+      top: 5px;
+    }
+  }
+}
+.letter {
+  right: -75px;
+}
+/** MESSAGE END **/
+
+/** ACCOUNT BEGIN **/
+.account {
+  right: -8px;
+  width: 116px;
+  height: 120px;
+  padding: 6px 0;
+  box-sizing: border-box;
+  a {
+    display: block;
+    width: 100%;
+    padding: 0 20px;
+    text-align: left;
+    font-size: 14px;
+    color: #8590a6;
+    height: 36px;
+    line-height: 36px;
+    box-sizing: border-box;
+    &:hover {
+      background-color: #f6f6f6;
+    }
+    svg {
+      top: 3px;
+      left: -2px;
+    }
+  }
+}
+.account::before, .account::after {
+  left: 46px;
+}
+/** ACCOUNT END **/

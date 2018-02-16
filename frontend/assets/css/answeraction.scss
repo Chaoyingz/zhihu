@@ -1,12 +1,6 @@
 .answer-actions {
   display: flex;
   align-items: center;
-  padding: 10px 20px;
-  margin: 0 -20px -10px;
-  color: #646464;
-  button {
-    color: #8590a6;
-  }
 
   .answer-vote > button {
     display: inline-block;
@@ -38,14 +32,13 @@
   }
 
   .answer-comment, .answer-share, .answer-collection,
-  .answer-thank, .answer-more {
+  .answer-thank, .answer-more{
     margin-left: 24px;
     cursor: pointer;
     font-size: 14px;
     line-height: 20px;
     color: #8590a6;
     svg {
-      position: relative;
       top: 1px;
     }
   }
