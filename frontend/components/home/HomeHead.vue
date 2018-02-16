@@ -52,9 +52,14 @@
       </div>
     </header>
 
-    <div id="info-container">
+    <span id="info-container">
 
         <!-- MESSAGE BEGIN -->
+        <transition
+          name="custom-classes-transition"
+          enter-active-class="animated In"
+          leave-active-class="animated fadeOut"
+        >
         <div class="message" v-if="showMessage" v-on-clickaway="hideMessage">
           <div class="message-content">
             <div class="message-empty">
@@ -72,9 +77,15 @@
             <a href="">查看全部提醒</a>
           </div>
         </div>
+        </transition>
         <!-- MESSAGE END -->
 
         <!-- LETTER BEGIN -->
+        <transition
+          name="custom-classes-transition"
+          enter-active-class="animated fadeIn"
+          leave-active-class="animated fadeOut"
+        >
         <div class="letter" v-if="showLetter" v-on-clickaway="hideLetter">
           <div class="letter-content">
             <div class="letter-empty">
@@ -92,9 +103,15 @@
             <a href="">查看全部私信</a>
           </div>
         </div>
+        </transition>
         <!-- LETTER END -->
 
         <!-- ACCOUNT BEGIN -->
+        <transition
+          name="custom-classes-transition"
+          enter-active-class="animated fadeIn"
+          leave-active-class="animated fadeOut"
+        >
         <div class="account" v-if="showAccount" v-on-clickaway="hideAccount">
           <a href="#">
             <icon name="user" scale="1"></icon>
@@ -109,9 +126,10 @@
             退出
           </a>
         </div>
+        </transition>
         <!-- ACCOUNT END -->
 
-    </div>
+    </span>
 
   </div>
 </template>
@@ -160,5 +178,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../assets/css/animate.css';
 @import '../../assets/css/header.scss';
 </style>

@@ -1,6 +1,6 @@
 #head-container {
   position: relative;
-  z-index: 1000;
+  z-index: 190;
   height: 52px;
 }
 header {
@@ -142,7 +142,6 @@ header {
   left: 50%;
   width: 1000px;
   margin-left: -500px;
-  min-height: 100px;
 }
 .message, .letter, .account {
   position: absolute;
