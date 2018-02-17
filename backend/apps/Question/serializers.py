@@ -45,10 +45,16 @@ class QuestionSerializer(serializers.ModelSerializer):
     """
 
     answers = AnswerSerializer(many=True, read_only=True)
-    answers_count = serializers.SerializerMethodField()
-    topic = serializers.CharField(source='topic.name', default='',)
-    author = serializers.CharField(source='author.username')
-    links = serializers.SerializerMethodField()
+    answers_count = serializers.SerializerMethodField(read_only=True)
+    topic_name = serializers.CharField(source='topic.name', allow_blank=True, allow_null=True,
+                                       read_only=True)
+    author_name = serializers.CharField(source='author.username', read_only=True)
+    author = serializers.HiddenField(
+        default=serializers.CurrentUserDefault(),
+        write_only=True
+    )
+    links = serializers.SerializerMethodField(read_only=True)
+    views = serializers.CharField(read_only=True)
 
     class Meta:
         model = Question

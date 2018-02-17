@@ -18,7 +18,8 @@ class BasePagination(PageNumberPagination):
     max_page_size = 100
 
 
-class AnswerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class AnswerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet,
+                    mixins.CreateModelMixin,):
 
     """
     回答
@@ -29,7 +30,8 @@ class AnswerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.G
     pagination_class = BasePagination
 
 
-class TopicViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class TopicViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet,
+                   mixins.CreateModelMixin,):
 
     """
     话题
@@ -40,7 +42,8 @@ class TopicViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.Ge
     pagination_class = BasePagination
 
 
-class QuestionViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class QuestionViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet,
+                      mixins.CreateModelMixin,):
 
     """
     问题

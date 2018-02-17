@@ -22,11 +22,16 @@
     </section>
 
     <!-- QUESTION BEGIN -->
-    <transition name="fade">
     <span v-if="showQuestion">
       <div class="question-wrapper">
         <div class="question-bk" @click="questionHide"></div>
+
         <div class="question-container">
+          <transition
+            name="custom-classes-transition"
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
+          >
           <div class="question-inner">
             <h3>写下你的问题</h3>
             <div class="question-sub">
@@ -62,10 +67,11 @@
             </button>
 
           </div>
+          </transition>
         </div>
+
       </div>
     </span>
-    </transition>
     <!-- QUESTION END -->
 
   </div>

@@ -57,7 +57,7 @@
         <!-- MESSAGE BEGIN -->
         <transition
           name="custom-classes-transition"
-          enter-active-class="animated In"
+          enter-active-class="animated fadeIn"
           leave-active-class="animated fadeOut"
         >
         <div class="message" v-if="showMessage" v-on-clickaway="hideMessage">

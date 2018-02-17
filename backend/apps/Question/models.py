@@ -39,27 +39,20 @@ class Question(models.Model):
     问题模型
     """
 
-    STATUS_CHOICES = (
-        ('draft', '草稿'),
-        ('published', '已发布')
-    )
-
     title = models.CharField(max_length=150, verbose_name="标题")
     body = models.TextField(verbose_name="内容")
-    publish = models.DateTimeField(default=timezone.now, verbose_name="发布日期")
     created = models.DateTimeField(auto_now_add=True, verbose_name="创建日期")
     updated = models.DateTimeField(auto_now=True, verbose_name="更新日期")
     views = models.PositiveIntegerField(default=0)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES,
-                              default='draft', verbose_name="问题状态")
     author = models.ForeignKey(User, related_name='questions',
                                verbose_name="提问者", on_delete=models.CASCADE,)
     topic = models.ForeignKey(Topic, related_name='questions', blank=True,
                               verbose_name="话题", on_delete=models.CASCADE,
                               null=True,)
+    anonymous = models.BooleanField(default=False, verbose_name='是否匿名')
 
     class Meta:
-        ordering = ('-publish',)
+        ordering = ('-updated',)
         verbose_name = "问题"
         verbose_name_plural = verbose_name
 
@@ -96,6 +89,7 @@ class Answer(models.Model):
     collection = models.ForeignKey(User, verbose_name="收藏", blank=True,
                                    null=True, on_delete=models.CASCADE,
                                    related_name="collection")
+    anonymous = models.BooleanField(default=False, verbose_name='是否匿名')
 
     # 赞同问题
     def up_vote(self):
