@@ -40,7 +40,7 @@ class Question(models.Model):
     """
 
     title = models.CharField(max_length=150, verbose_name="标题")
-    body = models.TextField(verbose_name="内容")
+    body = models.TextField(verbose_name="内容", null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name="创建日期")
     updated = models.DateTimeField(auto_now=True, verbose_name="更新日期")
     views = models.PositiveIntegerField(default=0)

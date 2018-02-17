@@ -38,21 +38,26 @@
               描述精确的问题更易得到解答
             </div>
             <form>
-              <div class="input-container">
-                <textarea aria-expanded="false" placeholder="问题标题">
+              <div class="input-container" :class="{'is-focus':focus==='title'}">
+                <textarea aria-expanded="false" placeholder="问题标题" v-model="questionForm.title"
+                v-focus='focus==="title"' @click="toggleFocus('title')">
                 </textarea>
               </div>
-              <div class="input-container">
-                <input type="text" placeholder="添加话题">
+              <div class="input-container" :class="{'is-focus':focus==='topic'}">
+                <input type="text" placeholder="添加话题" v-model="questionForm.topic"
+                v-focus='focus==="topic"' @click="toggleFocus('topic')">
+                <icon name="search" scale="1" class="topic"></icon>
               </div>
               <span>问题描述（可选）：</span>
-              <div class="input-container">
-                <textarea aria-expanded="false" placeholder="问题背景、条件、等详细信息">
+              <div class="input-container" :class="{'is-focus':focus==='body'}" v-focus='focus==="body"'>
+                <textarea aria-expanded="false" placeholder="问题背景、条件、等详细信息"
+                v-model="questionForm.body" @click="toggleFocus('body')">
                 </textarea>
               </div>
               <div class="anonymous">
                 <label for="anonymous-checkbox">
-                  <input type="checkbox" id="anonymous-checkbox">
+                  <input type="checkbox" id="anonymous-checkbox"
+                  v-model="questionForm.anonymous" @click="toggleFocus('')">
                   匿名提问
                 </label>
               </div>
@@ -83,18 +88,37 @@ export default {
   data () {
     return {
       showQuestion: false,
+      questionForm: {
+        title: '',
+        body: '',
+        anonymous: false,
+        topic: '',
+      },
+      focus: '',
     }
   },
   methods: {
     questionShow () {
       this.showQuestion = true
+      this.focus = 'title'
+      console.log(this.focus)
     },
     questionHide () {
       this.showQuestion = false
-    }
+    },
+    toggleFocus (div) {
+      this.focus = div
+    },
   },
   directives: {
     onClickaway: onClickaway,
+    focus: {
+      inserted: function (el, {value}) {
+        if (value) {
+          el.focus()
+        }
+      }
+    },
   },
 }
 </script>

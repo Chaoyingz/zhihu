@@ -48,3 +48,10 @@ export const fetchAddUserVote = params => {
 export const fetchDelUserVote = params => {
   return axios.delete(`${baseUrl}votes/${params}/`, config)
 }
+
+// 提交问题
+export const fetchQuestionPost = params => {
+  return axios.post(`${baseUrl}questions/`, config)
+}
+
+// 
