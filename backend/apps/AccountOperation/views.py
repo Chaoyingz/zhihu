@@ -55,6 +55,7 @@ class UserFlowQuestionViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
 
     serializer_class = UserFlowQuestionSerializer
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    lookup_field = "question"
 
     def get_queryset(self):
         return UserFlowQuestion.objects.filter(user=self.request.user)

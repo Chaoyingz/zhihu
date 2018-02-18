@@ -178,3 +178,68 @@
   }
 }
 /** ANSWER END **/
+
+#edit {
+  box-shadow: 0 1px 3px rgba(26, 26, 26, .1);
+  background-color: #fff;
+  width: 690px;
+  min-height: 200px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  .edit-header {
+    display: flex;
+    padding: 16px 20px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ebebeb;
+    .username {
+      font-weight: 600;
+      font-synthesis: style;
+      color: #444;
+    }
+    > button {
+      margin-left: auto;
+      font-size: 14px;
+      color: #8590a6;
+      &:hover {
+        color: gray;
+      }
+    }
+  }
+  form {
+    height: 100px;
+    textarea {
+      resize:none;
+      outline: none;
+      width: 100%;
+      height: 100%;
+      border: none;
+      overflow: hidden;
+      word-break: break-all;
+      font-size: 14px;
+      line-height: 24px;
+      padding: 12px 20px;
+      font-size: 15px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+    .submit {
+      padding: 0 24px;
+      box-sizing: border-box;
+      > button {
+        float: right;
+        color: #fff;
+        background-color: #0084ff;
+        border: 1px solid;
+        border-radius: 3px;
+        padding: 0 16px;
+        line-height: 32px;
+        font-size: 14px;
+        &:hover {
+          background-color: #0077e6;
+        }
+      }
+    }
+  }
+}

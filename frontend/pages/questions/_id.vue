@@ -33,8 +33,9 @@
 
         <div class="question-footer">
           <div class="question-button">
-            <button type="button">关注问题</button>
-            <button type="button">
+            <button type="button" v-show="!isFlow" @click="flowQuestion">关注问题</button>
+            <button type="button" v-show="isFlow" @click="flowQuestion">已关注</button>
+            <button type="button" @click="isWrite=true">
               <icon name="pencil" scale="0.9"></icon>
               写回答
             </button>
@@ -49,6 +50,25 @@
     <main>
       <div class="inner list">
 
+        <span v-if="isWrite">
+          <div id="edit">
+            <div class="edit-header">
+              <div class="username">
+                <span>{{ username }}</span>
+              </div>
+              <button type="button">
+                使用匿名身份回答
+              </button>
+            </div>
+            <form>
+              <textarea placeholder="写回答..."></textarea>
+              <div class="submit">
+                <button type="submit">提交回答</button>
+              </div>
+            </form>
+          </div>
+        </span>
+
         <div class="answer-list">
           <div class="answer-header">
             <h4>
@@ -60,15 +80,11 @@
             </button>
           </div>
 
-          <div class="answer" v-if="!question.answers">
-            还没有回答!
-          </div>
-
           <div class="answer" v-for="(answer, index) of question.answers"
           :key="index">
 
           <div class="author-info">
-            <div>{{ answer.author }}</div>
+            <div>{{ answer.author_name }}</div>
             <div>{{ answer.author_desc }}</div>
           </div>
 
@@ -100,12 +116,17 @@
 
 <script>
 import '../../filter/moment.js'
-import {fetchQuestionDetail, fetchUserVote} from '../../api/api'
+import {fetchQuestionDetail, fetchUserVote, fetchFlowQuestion, fetchFlowQuestionPost, fetchFlowQuestionDelete} from '../../api/api'
 import AnswerAction from '../../components/Home/AnswerAction'
 export default {
   layout: 'home',
   components: {
     AnswerAction,
+  },
+  computed: {
+    username () {
+      return this.$store.state.userInfo.username
+    }
   },
   head () {
     const title = this.title
@@ -118,6 +139,8 @@ export default {
       title: '加载中... ',
       question: [],
       voteStatus: [],
+      isFlow: false,
+      isWrite: false,
     }
   },
   methods: {
@@ -125,6 +148,13 @@ export default {
       fetchUserVote(this.$route.params.id)
       .then (res => {
         this.voteStatus = res.data
+      })
+      fetchFlowQuestion(this.$route.params.id)
+      .then(res => {
+        this.isFlow = true
+      })
+      .catch(err => {
+        this.isFlow = false
       })
       fetchQuestionDetail(this.$route.params.id)
       .then (res => {
@@ -134,7 +164,21 @@ export default {
     },
     pubTime (time) {
       return time.slice(0,10)
-    }
+    },
+    flowQuestion() {
+      if (this.isFlow) {
+        fetchFlowQuestionDelete(this.$route.params.id)
+        this.isFlow = false
+        this.question.flows -= 1
+      } else {
+        const params = {
+          question: this.$route.params.id
+        }
+        fetchFlowQuestionPost(params)
+        this.isFlow = true
+        this.question.flows += 1
+      }
+    },
   },
   created () {
     this.fetchData ()

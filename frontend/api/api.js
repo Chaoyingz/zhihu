@@ -60,3 +60,18 @@ export const fetchQuestionPost = params => {
 export const fetchTopic = () => {
   return axios.get(`${baseUrl}topics/`)
 }
+
+// 关注问题列表
+export const fetchFlowQuestion = params => {
+  return axios.get(`${baseUrl}flow_questions/${params}/`)
+}
+
+// 关注问题
+export const fetchFlowQuestionPost = params => {
+  return axios.post(`${baseUrl}flow_questions/`, params)
+}
+
+// 取消关注问题
+export const fetchFlowQuestionDelete = params => {
+  return axios.delete(`${baseUrl}flow_questions/${params}/`)
+}

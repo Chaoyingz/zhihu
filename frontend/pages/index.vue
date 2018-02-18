@@ -17,14 +17,14 @@
         </div>
 
         <div class="author-info">
-          <span>{{ answer.author }}</span>
+          <span>{{ answer.author_name }}</span>
           <span>{{ answer.author_desc }}</span>
         </div>
 
         <div class="question-title">
           <h2>
             <router-link :to="`questions/${answer.question_id}`" target="_blank">
-              {{ answer.question }}
+              {{ answer.question_title }}
             </router-link>
           </h2>
         </div>
