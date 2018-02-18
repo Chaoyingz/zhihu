@@ -24,6 +24,7 @@ class Topic(models.Model):
                                      related_name='child', verbose_name="父话题",
                                      on_delete=models.CASCADE)
     topic_type = models.IntegerField(choices=TYPE_CHOICES, verbose_name="话题级别")
+    flows = models.PositiveIntegerField(default=0, verbose_name="关注")
 
     class Meta:
         verbose_name = "话题"
@@ -50,6 +51,7 @@ class Question(models.Model):
                               verbose_name="话题", on_delete=models.CASCADE,
                               null=True,)
     anonymous = models.BooleanField(default=False, verbose_name='是否匿名')
+    flows = models.PositiveIntegerField(default=0, verbose_name="关注")
 
     class Meta:
         ordering = ('-updated',)
@@ -62,6 +64,22 @@ class Question(models.Model):
     def increase_views(self):
         self.views += 1
         self.save(update_fields=['views'])
+
+    def flow(self):
+        try:
+            self.flows += 1
+            self.save()
+        except IntegrityError:
+            return 'already_flowed'
+        return 'ok'
+
+    def cancel_flow(self):
+        try:
+            self.flows -= 1
+            self.save()
+        except IntegrityError:
+            return 'already_cancel'
+        return 'ok'
 
 
 class Answer(models.Model):
@@ -90,6 +108,7 @@ class Answer(models.Model):
                                    null=True, on_delete=models.CASCADE,
                                    related_name="collection")
     anonymous = models.BooleanField(default=False, verbose_name='是否匿名')
+    flows = models.PositiveIntegerField(default=0, verbose_name="关注")
 
     # 赞同问题
     def up_vote(self):

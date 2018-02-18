@@ -5,8 +5,8 @@ from rest_framework.authentication import SessionAuthentication
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
-from .serializers import UserVoteSerializer
-from .models import UserVote
+from .serializers import UserVoteSerializer, UserFlowQuestionSerializer
+from .models import UserVote, UserFlowQuestion
 
 
 class UserVoteViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet,
@@ -43,3 +43,28 @@ class UserVoteViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets
         if vote_type == 'down':
             answer.up_vote()
         instance.delete()
+
+
+class UserFlowQuestionViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                              mixins.CreateModelMixin, mixins.DestroyModelMixin,
+                              viewsets.GenericViewSet):
+
+    """
+    用户关注问题
+    """
+
+    serializer_class = UserFlowQuestionSerializer
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+
+    def get_queryset(self):
+        return UserFlowQuestion.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        question = instance.question
+        question.flow()
+
+    def perform_destroy(self, instance):
+        question = instance.question
+        question.cancel_flow()
+        question.delete()

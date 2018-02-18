@@ -8,7 +8,7 @@
         <div class="question-content">
           <div class="question-content-main">
             <div class="question-tag">
-              <span>{{ question.topic }}</span>
+              <span>{{ question.topic_name }}</span>
             </div>
             <h1 class="question-title">
               {{ question.title }}
@@ -21,7 +21,7 @@
             <div class="question-fllowstatus">
               <button type="button">
                 <div>关注者</div>
-                <strong>311</strong>
+                <strong>{{ question.flows }}</strong>
               </button>
               <div class="">
                 <div>被浏览</div>
@@ -58,6 +58,10 @@
               <span>默认排序　</span>
               <span><icon name="sort" scale="0.9"></icon></span>
             </button>
+          </div>
+
+          <div class="answer" v-if="!question.answers">
+            还没有回答!
           </div>
 
           <div class="answer" v-for="(answer, index) of question.answers"

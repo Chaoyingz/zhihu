@@ -8,10 +8,10 @@
           <icon name="edit" scale="1"></icon>
           提问
         </button>
-        <a href="#">
+        <router-link :to="`question`" target="_blank">
           <icon name="file-text-o" scale="1"></icon>
           回答
-        </a>
+        </router-link>
       </div>
       <!-- DASHBOARD NAV END -->
 
@@ -136,7 +136,7 @@ export default {
         this.$toasted.show(`发布问题成功!`, { duration: 3000, position: "bottom-right", })
       })
       .catch (err => {
-        this.$toasted.show(`问题发布失败!`, { duration: 3000, position: "bottom-right", })      
+        this.$toasted.show(`问题发布失败!`, { duration: 3000, position: "bottom-right", })
       })
     }
   },
