@@ -179,3 +179,35 @@
   float: right;
   top: -20px;
 }
+.input-topic {
+  position: relative;
+  .topic-select {
+    position: absolute;
+    left: -2px;
+    top: 45px;
+    width: 60%;
+    height: auto;
+    max-height: 200px;
+    padding: 5px 0;
+    background-color: #fff;
+    border-radius: 3px;
+    border: 1px solid rgba(26,26,26,.1);
+    box-sizing: border-box;
+    box-shadow: -3px 8px 8px rgba(26,26,26,.1);
+    overflow-x: auto;
+    overflow-y: scroll;
+    div {
+      display: block;
+      height: 40px;
+      line-height: 40px;
+      width: 100%;
+      text-align: left;
+      box-sizing: border-box;
+      padding-left: 10px;
+      cursor: pointer;
+      &:hover {
+        background-color: #f6f6f6;
+      }
+    }
+  }
+}

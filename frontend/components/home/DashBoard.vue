@@ -37,16 +37,23 @@
             <div class="question-sub">
               描述精确的问题更易得到解答
             </div>
-            <form>
+            <form @submit.prevent="questionSubmit">
               <div class="input-container" :class="{'is-focus':focus==='title'}">
                 <textarea aria-expanded="false" placeholder="问题标题" v-model="questionForm.title"
                 v-focus='focus==="title"' @click="toggleFocus('title')">
                 </textarea>
               </div>
-              <div class="input-container" :class="{'is-focus':focus==='topic'}">
-                <input type="text" placeholder="添加话题" v-model="questionForm.topic"
-                v-focus='focus==="topic"' @click="toggleFocus('topic')">
-                <icon name="search" scale="1" class="topic"></icon>
+              <div class="input-container input-topic" :class="{'is-focus':focus==='topic'}">
+                <input type="text" placeholder="添加话题" v-model="topicText"
+                v-focus='focus==="topic"' @click="toggleFocus('topic'), selectTopic()">
+                <icon name="search" scale="1" class="topic">
+                </icon>
+                <div class="topic-select" v-if="focus==='topic' && topics">
+                  <div v-for="(topic, index) of topics" :key="index"
+                  @click="questionForm.topic=topic.id, topicText=topic.name">
+                    {{ topic.name }}
+                  </div>
+                </div>
               </div>
               <span>问题描述（可选）：</span>
               <div class="input-container" :class="{'is-focus':focus==='body'}" v-focus='focus==="body"'>
@@ -83,7 +90,10 @@
 </template>
 
 <script>
-import { directive as onClickaway } from 'vue-clickaway';
+import { directive as onClickaway } from 'vue-clickaway'
+
+import { fetchTopic, fetchQuestionPost } from '../../api/api'
+
 export default {
   data () {
     return {
@@ -94,14 +104,15 @@ export default {
         anonymous: false,
         topic: '',
       },
+      topicText: '',
       focus: '',
+      topics: [],
     }
   },
   methods: {
     questionShow () {
       this.showQuestion = true
       this.focus = 'title'
-      console.log(this.focus)
     },
     questionHide () {
       this.showQuestion = false
@@ -109,6 +120,25 @@ export default {
     toggleFocus (div) {
       this.focus = div
     },
+    selectTopic () {
+      if (this.topics == false) {
+        fetchTopic()
+        .then (res => {
+          this.topics = res.data.results
+        })
+      }
+    },
+    // 提交问题
+    questionSubmit () {
+      fetchQuestionPost (this.questionForm)
+      .then (res => {
+        this.showQuestion = false
+        this.$toasted.show(`发布问题成功!`, { duration: 3000, position: "bottom-right", })
+      })
+      .catch (err => {
+        this.$toasted.show(`问题发布失败!`, { duration: 3000, position: "bottom-right", })      
+      })
+    }
   },
   directives: {
     onClickaway: onClickaway,

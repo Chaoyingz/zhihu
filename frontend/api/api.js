@@ -4,9 +4,11 @@ const baseUrl = 'http://localhost:8000/api/v1/'
 
 const token = process.browser ? JSON.parse(localStorage.getItem('vuex')).userInfo.token : null
 
-const config = {
-  headers: {'Authorization': 'JWT ' + token}
-}
+// const config = {
+//   headers: {'Authorization': 'JWT ' + token}
+// }
+
+axios.defaults.headers.common['Authorization'] = `JWT ${token}`
 
 // 获取问题列表
 export const fetchQuestions = () => { return axios.get(`${baseUrl}questions/`) }
@@ -36,22 +38,25 @@ export const fetchRegister = params => {
 
 // 获取当前用户赞同 / 反对问题状态列表
 export const fetchUserVote = params => {
-  return axios.get(`${baseUrl}votes/?search=${params}`, config)
+  return axios.get(`${baseUrl}votes/?search=${params}`)
 }
 
 // 赞同 / 反对回答
 export const fetchAddUserVote = params => {
-  return axios.post(`${baseUrl}votes/`, params, config)
+  return axios.post(`${baseUrl}votes/`, params)
 }
 
 // 取消赞同反对
 export const fetchDelUserVote = params => {
-  return axios.delete(`${baseUrl}votes/${params}/`, config)
+  return axios.delete(`${baseUrl}votes/${params}/`)
 }
 
 // 提交问题
 export const fetchQuestionPost = params => {
-  return axios.post(`${baseUrl}questions/`, config)
+  return axios.post(`${baseUrl}questions/`, params)
 }
 
-// 
+// 获取话题
+export const fetchTopic = () => {
+  return axios.get(`${baseUrl}topics/`)
+}

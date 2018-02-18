@@ -2,6 +2,8 @@ from rest_framework import mixins
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.authentication import SessionAuthentication
 
 from .serializers import AnswerSerializer, TopicSerializer, QuestionSerializer
 from .models import Answer, Topic, Question
@@ -52,6 +54,7 @@ class QuestionViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     pagination_class = BasePagination
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
