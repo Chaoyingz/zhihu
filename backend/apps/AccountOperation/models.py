@@ -41,3 +41,24 @@ class UserFlowQuestion(models.Model):
         unique_together = ('user', 'question')
         verbose_name = "用户关注问题"
         verbose_name_plural = verbose_name
+
+
+class UserFav(models.Model):
+
+    """
+    用户收藏问题
+    """
+
+    user = models.ForeignKey(User, verbose_name="用户", related_name='fav',
+                             on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, verbose_name="回答", related_name='fav',
+                               on_delete=models.CASCADE)
+    created = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
+
+    class Meta:
+        unique_together = ('user', 'answer')
+        verbose_name = "用户收藏问题"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return str(self.answer.id)

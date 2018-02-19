@@ -80,3 +80,23 @@ export const fetchFlowQuestionDelete = params => {
 export const fetchAnswerPost = params => {
   return axios.post(`${baseUrl}answers/`, params)
 }
+
+// 收藏列表
+export const fetchfav = () => {
+  return axios.get(`${baseUrl}favs/`)
+}
+
+// 添加收藏
+export const fetchfavpost = params => {
+  return axios.post(`${baseUrl}favs/`, params)
+}
+
+// 取消收藏
+export const fetchfavdel = params => {
+  return axios.delete(`${baseUrl}favs/${params}/`)
+}
+
+// 获取用户资料
+export const fetchUserProfile = () => {
+  return axios.get(`${baseUrl}users/`)
+}

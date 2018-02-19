@@ -13,56 +13,76 @@
       </button>
     </span>
 
-    <button type="button" class="answer-comment">
-      <icon name="comment" scale="1"></icon>
-      <span> 1 条评论</span>
-    </button>
-
-    <div class="answer-share">
+    <button class="answer-share" @click="shareStatus=!shareStatus">
       <icon name="send" scale="0.9"></icon>
       分享
+    </button>
+
+    <div class="answer-share-clip" v-if="shareStatus" v-on-clickaway="hideShare">
+      <button type="button" v-clipboard:copy="shareMessage"
+      v-clipboard:success="copyLink">
+        <icon name="link" scale="0.9"></icon>
+        复制链接
+      </button>
     </div>
 
-    <button type="button" class="answer-collection">
+    <button type="button" class="answer-collection" v-if="!isFav" @click="addFav">
       <icon name="star" scale="1"></icon>
       收藏
     </button>
 
-    <button type="button" class="answer-thank">
-      <icon name="heart" scale="0.9"></icon>
-      感谢
+    <button type="button" class="answer-collection" v-if="isFav" @click="delFav">
+      <icon name="star" scale="1"></icon>
+      已收藏
     </button>
 
-    <button type="button" class="answer-more">
-      <icon name="ellipsis-h" scale="0.9"></icon>
+    <button type="button" class="answer-thank" v-show="!thank" @click="thank=true">
+      <icon name="heart" scale="0.9"></icon>
+      <span>感谢</span>
+    </button>
+
+    <button type="button" class="answer-thank"  v-show="thank" @click="thank=false">
+      <icon name="heart" scale="0.9"></icon>
+      <span>已感谢</span>
     </button>
 
   </div>
 </template>
 
 <script>
-import {fetchAddUserVote, fetchDelUserVote} from '../../api/api'
+import {fetchAddUserVote, fetchDelUserVote, fetchfavpost, fetchfavdel} from '../../api/api'
+import { directive as onClickaway } from 'vue-clickaway'
 
 export default {
-  props: ['vote', 'answerId', 'answerIndex', 'voteStatus'],
+  props: ['vote', 'answerId', 'answerIndex', 'voteStatus', 'link', 'favStatus'],
   data () {
     return {
       numOfVote: JSON.parse(this.vote),
       upVoteStatus: false,
       downVoteStatus: false,
+      shareStatus: false,
+      shareMessage: `http://localhost:3000/questions/${this.link}`,
+      thank: false,
+      isFav: false
     }
   },
   methods: {
     // 获取赞同 / 反对初始状态
     fetchData () {
 
-      for (let i=0; i < this.voteStatus.length; i++) {
+      for (let i=0; i<this.voteStatus.length; i++) {
         if (this.answerId == this.voteStatus[i]["answer"]) {
           if (this.voteStatus[i]["vote_type"] == 'up') {
             this.upVoteStatus = true
           } else {
             this.downVoteStatus = true
           }
+        }
+      }
+
+      for (let i=0; i<this.favStatus.length; i++) {
+        if (this.answerId == this.favStatus[i]["answer"]) {
+          this.isFav = true
         }
       }
 
@@ -121,12 +141,48 @@ export default {
       fetchAddUserVote(params)
       .then (res => {
       })
-    }
+    },
 
+    copyLink () {
+      this.shareStatus = !this.shareStatus
+      this.$toasted.show(`复制链接成功!`, { duration: 3000, position: "bottom-right", })
+    },
+
+    hideShare() {
+      this.shareStatus = !this.shareStatus
+    },
+
+    addFav () {
+      const params = {
+        answer: this.answerId
+      }
+      fetchfavpost(params)
+      .then(res => {
+        this.isFav = true
+        this.$toasted.show(`添加收藏成功!`, { duration: 3000, position: "bottom-right", })
+      })
+      .catch(err => {
+        this.$toasted.show(`添加收藏失败!`, { duration: 3000, position: "bottom-right", })
+      })
+    },
+
+    delFav () {
+      fetchfavdel(this.answerId)
+      .then(res => {
+        this.isFav = false
+        this.$toasted.show(`取消收藏成功!`, { duration: 3000, position: "bottom-right", })
+      })
+      .catch(err => {
+        this.$toasted.show(`取消收藏失败!`, { duration: 3000, position: "bottom-right", })
+      })
+    },
   },
   created () {
     this.fetchData()
-  }
+  },
+  directives: {
+    onClickaway: onClickaway,
+  },
 }
 </script>
 

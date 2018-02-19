@@ -136,7 +136,7 @@
 
 <script>
 import {mapActions} from 'vuex'
-import { directive as onClickaway } from 'vue-clickaway';
+import { directive as onClickaway } from 'vue-clickaway'
 export default {
   data () {
     return {

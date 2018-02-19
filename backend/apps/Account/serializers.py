@@ -17,6 +17,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     UserProfile Serializer
     """
 
+    fav = serializers.StringRelatedField(many=True)
     password = serializers.CharField(
         style={'input_type': 'password'}, label="密码", write_only=True,
     )
@@ -24,7 +25,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("username", "gender", "email", "password", "views", "links")
+        fields = ("username", "gender", "email", "password", "views", "links", "fav")
 
     def get_links(self, obj):
         request = self.context['request']

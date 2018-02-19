@@ -51,9 +51,11 @@ class UserProfileViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, views
     用户
     """
 
-    queryset = User.objects.all()
     serializer_class = UserProfileSerializer
     pagination_class = BasePagination
+
+    def get_queryset(self):
+        return User.objects.filter(username=self.request.user.username)
 
 
 class SmsCodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):

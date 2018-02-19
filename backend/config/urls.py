@@ -8,7 +8,7 @@ from rest_framework.authtoken import views
 
 from Question.views import AnswerViewset, TopicViewset, QuestionViewset
 from Account.views import UserProfileViewSet, SmsCodeViewSet, UserRegisterViewset
-from AccountOperation.views import UserVoteViewSet, UserFlowQuestionViewSet
+from AccountOperation.views import UserVoteViewSet, UserFlowQuestionViewSet, UserFavViewSet
 
 
 router = DefaultRouter()
@@ -21,7 +21,7 @@ router.register(r'codes', SmsCodeViewSet, base_name='code')
 router.register(r'register', UserRegisterViewset, base_name='register')
 router.register(r'votes', UserVoteViewSet, base_name='vote')
 router.register(r'flow_questions', UserFlowQuestionViewSet, base_name='flow_question')
-
+router.register(r'favs', UserFavViewSet, base_name='fav')
 
 urlpatterns = [
     # ADMIN URL

@@ -106,7 +106,7 @@
               <span>发布于 {{ pubTime(answer.publish) }}</span>
             </div>
             <AnswerAction :vote="answer.vote" :answerId="answer.id" :answerIndex="index"
-            :voteStatus="voteStatus">
+            :voteStatus="voteStatus" :link="question.id" :favStatus="favStatus">
             </AnswerAction>
           </div>
 
@@ -123,7 +123,7 @@
 <script>
 import '../../filter/moment.js'
 import {fetchQuestionDetail, fetchUserVote, fetchFlowQuestion, fetchAnswerPost,
-        fetchFlowQuestionPost, fetchFlowQuestionDelete, } from '../../api/api'
+        fetchFlowQuestionPost, fetchFlowQuestionDelete, fetchfav} from '../../api/api'
 import AnswerAction from '../../components/Home/AnswerAction'
 export default {
   layout: 'home',
@@ -153,7 +153,8 @@ export default {
         status: 'published',
         anonymous: false,
         question: this.$route.params.id,
-      }
+      },
+      favStatus: [],
     }
   },
   methods: {
@@ -173,6 +174,10 @@ export default {
       .then (res => {
         this.question = res.data
         this.title = res.data.title
+      })
+      fetchfav()
+      .then (res => {
+        this.favStatus = res.data
       })
     },
     pubTime (time) {

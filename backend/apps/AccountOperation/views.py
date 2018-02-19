@@ -5,8 +5,8 @@ from rest_framework.authentication import SessionAuthentication
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
-from .serializers import UserVoteSerializer, UserFlowQuestionSerializer
-from .models import UserVote, UserFlowQuestion
+from .serializers import UserVoteSerializer, UserFlowQuestionSerializer, UserFavSerializer
+from .models import UserVote, UserFlowQuestion, UserFav
 
 
 class UserVoteViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet,
@@ -69,3 +69,19 @@ class UserFlowQuestionViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         question = instance.question
         question.cancel_flow()
         question.delete()
+
+
+class UserFavViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                     mixins.CreateModelMixin, mixins.DestroyModelMixin,
+                     viewsets.GenericViewSet):
+
+    """
+    用户收藏回答
+    """
+
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    serializer_class = UserFavSerializer
+    lookup_field = "answer"
+
+    def get_queryset(self):
+        return UserFav.objects.filter(user=self.request.user)

@@ -51,7 +51,7 @@
 
         <div class="answer-actions-outside">
           <AnswerAction :vote="answer.vote" :answerId="answer.id" :answerIndex="index"
-          :voteStatus="voteStatus">
+          :voteStatus="voteStatus" :link="answer.question_id" :favStatus="favStatus">
           </AnswerAction>
           <button type="button" class="read-less" v-show="contentStatus[index]"
           @click="toggleContent(index)">
@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import {fetchAnswers, fetchUserVote} from '../api/api'
+import {fetchAnswers, fetchUserVote, fetchfav} from '../api/api'
 import AnswerAction from '../components/Home/AnswerAction'
 import DashBoard from '../components/Home/DashBoard'
 export default {
@@ -116,6 +116,7 @@ export default {
       recommendList: [],
       contentStatus: [],
       voteStatus: [],
+      favStatus: [],
     }
   },
   methods: {
@@ -128,6 +129,10 @@ export default {
       fetchAnswers()
       .then (res => {
         this.recommendList = res.data.results
+      })
+      fetchfav()
+      .then (res => {
+        this.favStatus = res.data
       })
     },
     // 问题文本截取

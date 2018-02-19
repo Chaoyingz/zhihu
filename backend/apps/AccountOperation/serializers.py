@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import UserVote, UserFlowQuestion
+from .models import UserVote, UserFlowQuestion, UserFav
 
 
 class UserVoteSerializer(serializers.ModelSerializer):
@@ -33,3 +33,20 @@ class UserFlowQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserFlowQuestion
         fields = ('user', 'question')
+
+
+class UserFavSerializer(serializers.ModelSerializer):
+
+    """
+    User Fav Serializer
+    """
+
+    question_title = serializers.CharField(source="answer.question.title", read_only=True)
+    answer_vote = serializers.CharField(source="answer.vote", read_only=True)
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+
+    class Meta:
+        model = UserFav
+        fields = ('user', 'answer', 'question_title', 'answer_vote')

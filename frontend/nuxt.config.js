@@ -12,6 +12,7 @@ module.exports = {
   plugins: [
     { src: '~plugins/awesome-icon'},
     { src: '~plugins/vue-toasted', ssr: false},
+    { src: '~plugins/vue-clipboard2', ssr: false},
   ],
   /*
   ** Headers of the page
@@ -49,6 +50,6 @@ module.exports = {
         })
       }
     },
-    vendor: ['vue-awesome', 'axios', 'vue-toasted',]
+    vendor: ['vue-awesome', 'axios', 'vue-toasted', 'vue-clipboard2']
   }
 }

@@ -27,7 +27,6 @@ main {
   box-sizing: border-box;
   margin-top: 10px;
   box-shadow: 0 1px 3px rgba(26,26,26,.1);
-  overflow: hidden;
   border-radius: 3px;
   &:first-child {
     margin-top: 0;
@@ -106,6 +105,7 @@ main {
     }
   }
   .answer-actions-outside {
+    position: relative;
     display: flex;
     align-items: center;
     padding: 10px 20px;
