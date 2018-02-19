@@ -10,20 +10,19 @@ class AnswerSerializer(serializers.ModelSerializer):
     Answer Serializer
     """
 
-    question = serializers.CharField(write_only=True)
     question_title = serializers.CharField(source='question.title', read_only=True)
     question_id = serializers.CharField(source='question.id', read_only=True)
     topic = serializers.CharField(source='question.topic', read_only=True)
     author_name = serializers.CharField(source='author.username', read_only=True)
     author_desc = serializers.CharField(source='author.desc', read_only=True)
-    links = serializers.SerializerMethodField(read_only=True)
-    flows = serializers.CharField(read_only=True)
-    collection = serializers.CharField(read_only=True)
-    vote = serializers.CharField(read_only=True)
     author = serializers.HiddenField(
         default=serializers.CurrentUserDefault(),
         write_only=True
     )
+    links = serializers.SerializerMethodField(read_only=True)
+    flows = serializers.CharField(read_only=True)
+    collection = serializers.CharField(read_only=True)
+    vote = serializers.CharField(read_only=True)
 
     class Meta:
         model = Answer

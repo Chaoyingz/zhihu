@@ -30,6 +30,7 @@ class AnswerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.G
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
     pagination_class = BasePagination
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
 
 class TopicViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet,
@@ -42,6 +43,7 @@ class TopicViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.Ge
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
     pagination_class = BasePagination
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
 
 class QuestionViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet,

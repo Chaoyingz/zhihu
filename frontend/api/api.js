@@ -75,3 +75,8 @@ export const fetchFlowQuestionPost = params => {
 export const fetchFlowQuestionDelete = params => {
   return axios.delete(`${baseUrl}flow_questions/${params}/`)
 }
+
+// 提交回答
+export const fetchAnswerPost = params => {
+  return axios.post(`${baseUrl}answers/`, params)
+}

@@ -56,12 +56,15 @@
               <div class="username">
                 <span>{{ username }}</span>
               </div>
-              <button type="button">
+              <button type="button" v-if="!answer.anonymous" @click="answer.anonymous=true">
                 使用匿名身份回答
               </button>
+              <button type="button" v-if="answer.anonymous" @click="answer.anonymous=false">
+                使用实名身份回答
+              </button>
             </div>
-            <form>
-              <textarea placeholder="写回答..."></textarea>
+            <form @submit.prevent="publishAnswer">
+              <textarea placeholder="写回答..." v-model="answer.text"></textarea>
               <div class="submit">
                 <button type="submit">提交回答</button>
               </div>
@@ -83,9 +86,12 @@
           <div class="answer" v-for="(answer, index) of question.answers"
           :key="index">
 
-          <div class="author-info">
+          <div class="author-info" v-if="!answer.anonymous">
             <div>{{ answer.author_name }}</div>
             <div>{{ answer.author_desc }}</div>
+          </div>
+          <div class="author-info" v-if="answer.anonymous">
+            <div>匿名用户</div>
           </div>
 
           <div class="answer-vote">
@@ -116,7 +122,8 @@
 
 <script>
 import '../../filter/moment.js'
-import {fetchQuestionDetail, fetchUserVote, fetchFlowQuestion, fetchFlowQuestionPost, fetchFlowQuestionDelete} from '../../api/api'
+import {fetchQuestionDetail, fetchUserVote, fetchFlowQuestion, fetchAnswerPost,
+        fetchFlowQuestionPost, fetchFlowQuestionDelete, } from '../../api/api'
 import AnswerAction from '../../components/Home/AnswerAction'
 export default {
   layout: 'home',
@@ -141,6 +148,12 @@ export default {
       voteStatus: [],
       isFlow: false,
       isWrite: false,
+      answer: {
+        text: '',
+        status: 'published',
+        anonymous: false,
+        question: this.$route.params.id,
+      }
     }
   },
   methods: {
@@ -179,6 +192,16 @@ export default {
         this.question.flows += 1
       }
     },
+    publishAnswer () {
+      fetchAnswerPost(this.answer)
+      .then(res => {
+        this.isWrite = false
+        this.$toasted.show(`回答问题成功!`, { duration: 3000, position: "bottom-right", })
+      })
+      .catch(err => {
+        this.$toasted.show(`回答发布失败!`, { duration: 3000, position: "bottom-right", })
+      })
+    }
   },
   created () {
     this.fetchData ()

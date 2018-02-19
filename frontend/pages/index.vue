@@ -16,9 +16,12 @@
           </span>
         </div>
 
-        <div class="author-info">
-          <span>{{ answer.author_name }}</span>
-          <span>{{ answer.author_desc }}</span>
+        <div class="author-info" v-if="!answer.anonymous">
+          <div>{{ answer.author_name }}</div>
+          <div>{{ answer.author_desc }}</div>
+        </div>
+        <div class="author-info" v-if="answer.anonymous">
+          <div>匿名用户</div>
         </div>
 
         <div class="question-title">
