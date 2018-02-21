@@ -49,6 +49,9 @@ header {
           color: #175199;
         }
       }
+      a.active {
+        color: #444;
+      }
     }
     /** NAV BAR END **/
 
@@ -95,6 +98,13 @@ header {
             left: 3px;
             top: 3px;
           }
+        }
+      }
+      form.active {
+        background-color: #fff;
+        border: 1px solid #8590a6;
+        div {
+          color: #0084ff;
         }
       }
 

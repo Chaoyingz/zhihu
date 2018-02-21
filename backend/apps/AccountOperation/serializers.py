@@ -41,12 +41,15 @@ class UserFavSerializer(serializers.ModelSerializer):
     User Fav Serializer
     """
 
+    question_id = serializers.CharField(source="answer.question.id", read_only=True)
     question_title = serializers.CharField(source="answer.question.title", read_only=True)
     answer_vote = serializers.CharField(source="answer.vote", read_only=True)
+    answer_text = serializers.CharField(source="answer.text", read_only=True)
+    author_name = serializers.CharField(source="answer.author", read_only=True)
     user = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
     )
 
     class Meta:
         model = UserFav
-        fields = ('user', 'answer', 'question_title', 'answer_vote')
+        fields = "__all__"

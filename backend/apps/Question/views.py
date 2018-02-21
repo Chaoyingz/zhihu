@@ -4,6 +4,8 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 from .serializers import AnswerSerializer, TopicSerializer, QuestionSerializer
 from .models import Answer, Topic, Question
@@ -56,6 +58,8 @@ class QuestionViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     pagination_class = BasePagination
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
+    search_fields = ('title',)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
     def retrieve(self, request, *args, **kwargs):

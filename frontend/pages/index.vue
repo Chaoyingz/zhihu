@@ -74,19 +74,19 @@
     <section id="side-container">
       <ul class="nav-list">
         <li>
-          <a href="#">
+          <router-link :to="`collection`" target="_blank">
             <icon name="star" scale="1"></icon>
             <span>我的收藏</span>
-          </a>
+          </router-link>
         </li>
         <li>
-          <a href="#">
+          <a href="#" title="未开发">
             <icon name="question-circle" scale="1"></icon>
             <span>我关注的问题</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="#" title="未开发">
             <icon name="user-plus" scale="1"></icon>
             <span>我的邀请</span>
           </a>

@@ -100,3 +100,8 @@ export const fetchfavdel = params => {
 export const fetchUserProfile = () => {
   return axios.get(`${baseUrl}users/`)
 }
+
+// 搜索
+export const fetchSearch = params => {
+  return axios.get(`${baseUrl}questions/?search=${params}`)
+}

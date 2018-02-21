@@ -11,16 +11,15 @@
 
         <!-- NAV BAR BEGIN -->
         <nav>
-          <a href="/">首页</a>
-          <a href="#">发现</a>
-          <a href="#">话题</a>
+          <a href="/" @click="active = 'home'" :class="{'active': active == 'home'}">首页</a>
+          <router-link :to="`question`" @click="active = 'discover'" :class="{'active': active == 'discover'}">发现</router-link>
         </nav>
         <!-- NAV BAR END -->
 
         <!-- SEARCH BAR BEGIN -->
         <div id="searchbar">
-          <form>
-            <input type="text" placeholder="搜索你感兴趣的内容...">
+          <form :class="{'active': searchActive}" @click="searchActive=true" v-on-clickaway="hideSearch">
+            <input type="text" placeholder="搜索你感兴趣的内容..." v-model="searchText">
             <div>
               <icon name="search" scale="0.9"></icon>
             </div>
@@ -32,16 +31,16 @@
         <!-- ACCOUNT BAR BEGIN -->
         <div id="accountbar">
           <div class="accountbar-icon">
-            <button type="button" @click="show('message')">
+            <button type="button" @click="show('message')"  title="未开发">
               <icon name="bell" scale="1.3"></icon>
             </button>
           </div>
           <div class="accountbar-icon">
-            <button type="button" @click="show('letter')">
+            <button type="button" @click="show('letter')"  title="未开发">
               <icon name="commenting" scale="1.3"></icon>
             </button>
           </div>
-          <div class="accountbar-icon" @click="show('account')">
+          <div class="accountbar-icon" @click="show('account')"  title="未开发 可退出">
             <button type="button">
               <icon name="user" scale="1.3"></icon>
             </button>
@@ -137,12 +136,17 @@
 <script>
 import {mapActions} from 'vuex'
 import { directive as onClickaway } from 'vue-clickaway'
+
+import {fetchSearch} from '../../api/api'
 export default {
   data () {
     return {
       showMessage: false,
       showLetter: false,
       showAccount: false,
+      active: 'home',
+      searchText: '',
+      searchActive: false,
     }
   },
   methods: {
@@ -169,6 +173,9 @@ export default {
       this.$store.dispatch('userLogout')
       this.$router.push('/signup')
       this.$toasted.show(`用户退出成功!`, { duration: 3000, position: "bottom-right", })
+    },
+    hideSearch () {
+      this.searchActive = false
     }
   },
   directives: {

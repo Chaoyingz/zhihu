@@ -1,0 +1,36 @@
+#collection {
+  margin-top: 25px;
+  width: 70%;
+  #fav {
+    border-top: 1px solid rgb(221, 221, 221);
+    margin-bottom: 10px;
+  }
+  h2 {
+    font-weight: 700;
+    font-size: 14px;
+    outline: 0px;
+    a {
+      color: rgb(34, 85, 153);
+    }
+  }
+  .author {
+    height: 24px;
+  }
+  .author > span {
+    font-size: 14px;
+    height: 24px;
+    line-height: 24px;
+  }
+  .author > .vote {
+    color: rgb(105, 142, 191);
+    padding: 2px 10px;
+    text-align: center;
+    border-radius: 3px;
+    background: rgb(239, 246, 250);
+    margin-right: 10px;
+  }
+  .text {
+    margin-top: 10px;
+  }
+
+}
