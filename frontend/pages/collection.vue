@@ -31,6 +31,7 @@ export default {
       favs: []
     }
   },
+  middleware: 'checkAuth',
   methods: {
     fetchData() {
       fetchfav()

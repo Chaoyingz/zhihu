@@ -40,6 +40,7 @@ export default {
     }
   },
   layout: 'home',
+  middleware: 'checkAuth',
   methods: {
     fetchData () {
       fetchQuestions ()

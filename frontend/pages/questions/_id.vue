@@ -135,6 +135,7 @@ export default {
       return this.$store.state.userInfo.username
     }
   },
+  middleware: 'checkAuth',
   head () {
     const title = this.title
     return {

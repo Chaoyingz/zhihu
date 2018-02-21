@@ -111,6 +111,7 @@ export default {
     DashBoard,
     AnswerAction,
   },
+  middleware: 'checkAuth',
   data () {
     return {
       recommendList: [],
