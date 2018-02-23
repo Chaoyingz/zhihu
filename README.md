@@ -9,8 +9,11 @@ Django 仿知乎
 以 nginx + uwsgi 进行部署，未做移动端适配。
 
 [link](http://119.28.134.202/signup)
+
 测试账号:
+
 username: test@test.com
+
 password: asd123
 ## 运行方式
 
